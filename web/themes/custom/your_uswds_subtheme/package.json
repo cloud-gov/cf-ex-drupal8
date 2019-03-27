@@ -1,5 +1,5 @@
 {
-  "name": "osc",
+  "name": "your_uswds_subtheme",
   "version": "1.0.0",
   "scripts": {
     "prebuild:css": "node-sass --include-path scss sass/uswds.scss assets/css/uswds.css",

@@ -1,6 +1,6 @@
-name: OSC
+name: Your USWDS Subtheme
 type: theme
-description: 'A subtheme of USWDS.'
+description: 'A custom subtheme of USWDS.'
 core: 8.x
 base theme: uswds
 
