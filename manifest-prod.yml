@@ -11,7 +11,7 @@ default_config: &defaults
                # "ROOT_USER_NAME": ...,
                # "ROOT_USER_PASS": ...,
                # }'
-    - storage  # cf create-service s3 basic storage
+    - storage  # cf create-service s3 basic-sandbox storage
 
 applications:
 - name: web
