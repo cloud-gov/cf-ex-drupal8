@@ -1,12 +1,12 @@
 {
-    "name": "18f/nsf",
-    "description": "The National Science Foundation's beta site",
+    "name": "18f/cf-ex-drupal8",
+    "description": "A sample Drupal 8 site readily deployable to cloud.gov",
     "type": "project",
     "license": "GPL-2.0+",
     "authors": [
         {
-            "name": "",
-            "role": ""
+            "name": "Fureigh",
+            "role": "Lead engineer"
         }
     ],
     "repositories": [
