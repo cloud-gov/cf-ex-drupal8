@@ -19,7 +19,7 @@ applications:
   memory: 256M
   instances: 2
   routes:
-    - route: drupal8-demo.app.cloud.gov
+    - route: fureigh-dev.app.cloud.gov
 - name: cronish
   <<: *defaults
   no-route: true
