@@ -18,8 +18,7 @@ applications:
   <<: *defaults
   memory: 256M
   instances: 2
-  routes:
-    - route: fureigh-dev.app.cloud.gov
+  random-route: true
 - name: cronish
   <<: *defaults
   no-route: true
