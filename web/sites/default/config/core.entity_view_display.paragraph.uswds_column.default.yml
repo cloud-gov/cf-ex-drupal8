@@ -1,0 +1,24 @@
+uuid: c17ae550-9150-438c-969c-f1524a9cbc4c
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.paragraph.uswds_column.field_uswds_body
+    - paragraphs.paragraphs_type.uswds_column
+  module:
+    - text
+_core:
+  default_config_hash: Z8-B1oczqUGnk1IQ2unYf-DMLrHeZRXBU-3ydiM5x94
+id: paragraph.uswds_column.default
+targetEntityType: paragraph
+bundle: uswds_column
+mode: default
+content:
+  field_uswds_body:
+    weight: 0
+    label: hidden
+    settings: {  }
+    third_party_settings: {  }
+    type: text_default
+    region: content
+hidden: {  }

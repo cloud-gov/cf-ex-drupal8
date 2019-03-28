@@ -1,0 +1,25 @@
+uuid: 8076f9c0-3d09-41fa-8d79-fb6ddc180002
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_uswds_accordion_expand
+    - paragraphs.paragraphs_type.uswds_accordion
+_core:
+  default_config_hash: exX4vEiA3GzVlE-xmfIi6J7wM-QXTss1wC0CQHSppZs
+id: paragraph.uswds_accordion.field_uswds_accordion_expand
+field_name: field_uswds_accordion_expand
+entity_type: paragraph
+bundle: uswds_accordion
+label: 'Start expanded'
+description: ''
+required: false
+translatable: false
+default_value:
+  -
+    value: 0
+default_value_callback: ''
+settings:
+  on_label: 'On'
+  off_label: 'Off'
+field_type: boolean

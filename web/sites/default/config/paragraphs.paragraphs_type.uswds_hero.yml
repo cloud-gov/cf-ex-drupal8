@@ -1,0 +1,11 @@
+uuid: 34a439c0-9301-4808-8377-1c9e2864d7f4
+langcode: en
+status: true
+dependencies: {  }
+_core:
+  default_config_hash: MYy6XeKRICyj_HSop5y5-AyU0IzVCMelEfIh2QAjbNI
+id: uswds_hero
+label: Hero
+icon_uuid: null
+description: null
+behavior_plugins: {  }

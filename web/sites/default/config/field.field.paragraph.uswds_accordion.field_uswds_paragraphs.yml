@@ -1,0 +1,44 @@
+uuid: ee80570e-3c99-4a3e-9645-c1e3553900c7
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_uswds_paragraphs
+    - paragraphs.paragraphs_type.uswds_accordion
+    - paragraphs.paragraphs_type.uswds_accordion_item
+  module:
+    - entity_reference_revisions
+_core:
+  default_config_hash: VKFXW3LCVAP602ROCYS2qEcU73lUI2pYD1TY1OYjMvc
+id: paragraph.uswds_accordion.field_uswds_paragraphs
+field_name: field_uswds_paragraphs
+entity_type: paragraph
+bundle: uswds_accordion
+label: 'Accordion Items'
+description: ''
+required: true
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:paragraph'
+  handler_settings:
+    target_bundles:
+      uswds_accordion_item: uswds_accordion_item
+    target_bundles_drag_drop:
+      uswds_accordion:
+        weight: 7
+        enabled: false
+      uswds_accordion_item:
+        enabled: true
+        weight: 8
+      uswds_graphic_list:
+        weight: 9
+        enabled: false
+      uswds_hero:
+        weight: 10
+        enabled: false
+      uswds_media_block:
+        weight: 11
+        enabled: false
+field_type: entity_reference_revisions

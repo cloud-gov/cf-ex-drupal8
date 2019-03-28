@@ -1,0 +1,25 @@
+uuid: fa0ee33c-295e-4afd-b959-a73ab6a80152
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_uswds_accordion_multi
+    - paragraphs.paragraphs_type.uswds_accordion
+_core:
+  default_config_hash: itbChZUwmoutZ-xv2-6bj6kvO_fIfJUOqbcoR0tDlCY
+id: paragraph.uswds_accordion.field_uswds_accordion_multi
+field_name: field_uswds_accordion_multi
+entity_type: paragraph
+bundle: uswds_accordion
+label: 'Allow more than one item to expand at a time'
+description: ''
+required: false
+translatable: false
+default_value:
+  -
+    value: 0
+default_value_callback: ''
+settings:
+  on_label: 'On'
+  off_label: 'Off'
+field_type: boolean

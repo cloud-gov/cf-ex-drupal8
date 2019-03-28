@@ -1,0 +1,25 @@
+uuid: a502b515-015f-41e9-b6a9-dca41d31716f
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_uswds_grid_column_width
+    - paragraphs.paragraphs_type.uswds_grid
+  module:
+    - options
+_core:
+  default_config_hash: osWxwCVAGP_S4b-BJM3_YbAoKHp_HV9H93InzczVjmo
+id: paragraph.uswds_grid.field_uswds_grid_column_width
+field_name: field_uswds_grid_column_width
+entity_type: paragraph
+bundle: uswds_grid
+label: 'Column width'
+description: 'This sets the width of the columns in this row.'
+required: true
+translatable: false
+default_value:
+  -
+    value: 2
+default_value_callback: ''
+settings: {  }
+field_type: list_integer

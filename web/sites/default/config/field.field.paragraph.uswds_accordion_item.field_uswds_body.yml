@@ -1,0 +1,23 @@
+uuid: f172ae18-5d02-4ce0-b30e-20657c280572
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_uswds_body
+    - paragraphs.paragraphs_type.uswds_accordion_item
+  module:
+    - text
+_core:
+  default_config_hash: Jy09BnZ-2MHGqK59jaAGwDopAAe8jYXMQH5OFVSh1Ak
+id: paragraph.uswds_accordion_item.field_uswds_body
+field_name: field_uswds_body
+entity_type: paragraph
+bundle: uswds_accordion_item
+label: Text
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: text_long

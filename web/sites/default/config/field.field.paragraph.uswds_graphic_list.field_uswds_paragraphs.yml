@@ -1,0 +1,44 @@
+uuid: 1e24fd66-4d6b-463b-a53b-e6869764b599
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_uswds_paragraphs
+    - paragraphs.paragraphs_type.uswds_graphic_list
+    - paragraphs.paragraphs_type.uswds_media_block
+  module:
+    - entity_reference_revisions
+_core:
+  default_config_hash: SXps1alysp2HujSGXX6DsfeJk_CQmPLw-NlpI4xrFao
+id: paragraph.uswds_graphic_list.field_uswds_paragraphs
+field_name: field_uswds_paragraphs
+entity_type: paragraph
+bundle: uswds_graphic_list
+label: 'Media blocks'
+description: ''
+required: true
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:paragraph'
+  handler_settings:
+    target_bundles:
+      uswds_media_block: uswds_media_block
+    target_bundles_drag_drop:
+      uswds_accordion:
+        weight: 6
+        enabled: false
+      uswds_accordion_item:
+        weight: 7
+        enabled: false
+      uswds_graphic_list:
+        weight: 8
+        enabled: false
+      uswds_hero:
+        weight: 9
+        enabled: false
+      uswds_media_block:
+        enabled: true
+        weight: 10
+field_type: entity_reference_revisions

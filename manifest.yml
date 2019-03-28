@@ -1,0 +1,28 @@
+---
+default_config: &defaults
+  buildpack: https://github.com/cloudfoundry/multi-buildpack#v1.0.3
+  disk_quota: 512M
+  timeout: 180
+  services:
+    - database # cf create-service aws-rds medium-mysql database
+    - secrets  # cf create-user-provided-service secrets -p '{
+               # "CRON_KEY": ...
+               # "HASH_SALT": ...
+               # "ROOT_USER_NAME": ...,
+               # "ROOT_USER_PASS": ...,
+               # }'
+    - storage  # cf create-service s3 basic storage
+
+applications:
+- name: web
+  <<: *defaults
+  memory: 256M
+  instances: 2
+  routes:
+    - route: drupal8-demo.app.cloud.gov
+- name: cronish
+  <<: *defaults
+  no-route: true
+  command: ./cronish.sh
+  health-check-type: process
+  memory: 128M
