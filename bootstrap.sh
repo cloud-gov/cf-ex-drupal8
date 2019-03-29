@@ -70,6 +70,6 @@ if [ "${CF_INSTANCE_INDEX:-''}" == "0" ] && [ "${APP_NAME}" == "web" ]; then
   # Clear the cache
   drupal --root=$APP_ROOT/web cache:rebuild --no-interaction
 
-  # Copy local files to S3"
-  drush --root=$APP_ROOT/web s3fs:copy-local --no-interaction
+#  # Copy local files to S3"
+#  drush --root=$APP_ROOT/web s3fs:copy-local --no-interaction
 fi

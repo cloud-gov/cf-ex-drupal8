@@ -15,8 +15,6 @@ services:
           - cg-bucket.s3-us-west-1.amazonaws.com
           - s3-us-west-1.amazonaws.com
     image: minio/minio:latest
-    ports:
-      - 4554:80
     environment:
       MINIO_DOMAIN: "s3-us-west-1.amazonaws.com"
       MINIO_ACCESS_KEY: ACCESS_KEY_ID
@@ -76,7 +74,7 @@ services:
               "bucket": "cg-bucket",
               "region": "us-west-1",
               "secret_access_key": "secret123",
-              "uri": "s3://ACCESS_KEY_ID:secret@storage/cg-bucket"
+              "uri": "s3://ACCESS_KEY_ID:secret123@storage/cg-bucket"
             },
             "label": "s3",
             "plan": "basic-public"
