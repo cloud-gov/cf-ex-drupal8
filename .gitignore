@@ -39,6 +39,13 @@ sites/*/private
 # Ignore SimpleTest multi-site environment.
 sites/simpletest
 
+# Ignore default settings that are updated upon Drupal core updates.
+web/sites/default/default.settings.php
+web/sites/example.sites.php
+
+# Ignore generated files
+web/sites/default/files/*
+
 # If you prefer to store your .gitignore file in the sites/ folder, comment
 # or delete the previous settings and uncomment the following ones, instead.
 
