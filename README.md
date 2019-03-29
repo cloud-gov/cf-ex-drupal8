@@ -15,6 +15,35 @@ The code examples target [cloud.gov](https://cloud.gov) but should be amenable t
 
 The goal here is for folks who are just getting started with cloud.gov to have an eye-poppingly simple route from “I have a cloud.gov account” to “I have a production-worthy Drupal site running on a FedRAMP-authorized CSP that I understand how to update, just waiting for me to customize it”.
 
+## Quickstart
+
+Locally:
+
+```sh
+bin/composer install
+```
+
+Test with docker-compose, and view at http://localhost:8080
+
+```sh
+docker-compose up
+```
+
+With cloud.gov, and view at the random-route selected:
+
+```
+cf create-user-provided-service secrets -p '{
+              "ADMIN_EMAIL": "secret@example.com",
+              "CRON_KEY": "SECRET",
+              "HASH_SALT": "SECRET",
+              "ROOT_USER_NAME": "root",
+              "ROOT_USER_PASS": "root"
+            }'
+cf create-service s3 basic-sandbox storage
+cf create-service aws-rds medium-mysql database # Takes 5-10m
+cf push
+```
+
 ## Developing locally
 
 We'll use [Git](https://git-scm.com/) to pull down and manage our codebase.
