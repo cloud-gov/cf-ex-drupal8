@@ -1,0 +1,32 @@
+uuid: c565c158-6f43-4cf7-b255-6660289300d8
+langcode: en
+status: true
+dependencies:
+  module:
+    - options
+    - paragraphs
+_core:
+  default_config_hash: hvoF1gF14B61TNI-3rx6eK4vOGPj_L3x7kDJAuqwdpk
+id: paragraph.field_uswds_grid_column_stretch
+field_name: field_uswds_grid_column_stretch
+entity_type: paragraph
+type: list_integer
+settings:
+  allowed_values:
+    -
+      value: 1
+      label: 'First column'
+    -
+      value: 2
+      label: 'Second column'
+    -
+      value: 3
+      label: 'Third column'
+  allowed_values_function: ''
+module: options
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

@@ -1,0 +1,25 @@
+uuid: 2fc24cfa-8caf-483b-9bba-6fbfbe330520
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_uswds_grid_column_stretch
+    - paragraphs.paragraphs_type.uswds_grid
+  module:
+    - options
+_core:
+  default_config_hash: 3ze_8lCDqbOc9XJv-kLPNfqMnINVER6_8AwZ4tNe-JU
+id: paragraph.uswds_grid.field_uswds_grid_column_stretch
+field_name: field_uswds_grid_column_stretch
+entity_type: paragraph
+bundle: uswds_grid
+label: 'Column to stretch'
+description: ''
+required: false
+translatable: false
+default_value:
+  -
+    value: 1
+default_value_callback: ''
+settings: {  }
+field_type: list_integer

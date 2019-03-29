@@ -1,0 +1,11 @@
+uuid: b0f1cb6e-2d09-46c4-ae81-e61c42ed5948
+langcode: en
+status: true
+dependencies: {  }
+_core:
+  default_config_hash: 6yOi3YQR_hvLI3Lf9cXFGvER8dwlhw-RtNRr-s0FCaM
+id: uswds_grid
+label: 'Row of columns'
+icon_uuid: null
+description: null
+behavior_plugins: {  }

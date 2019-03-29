@@ -1,0 +1,67 @@
+// Import overrides of USWDS variables.
+@import "_variables.scss";
+// Import the USWDS source.
+@import "../assets/scss/uswds.scss";
+
+html {
+  .usa-banner {
+    background-color: #11304F;
+    color: #fff;
+    .usa-banner-header,
+    .usa-banner-button,
+    .usa-accordion {
+      color: #fff;
+    }
+  }
+  .usa-header {
+    background-color: #F5FBFF;
+    .usa-logo {
+      margin-top: 2rem;
+      margin-bottom: 0;
+      a {
+      color: #981B1E
+      }
+    }
+    .logo-img img {
+      height: 50px;
+    }
+    .usa-logo-text {
+      display: inline-block;
+    }
+  }
+  .usa-header-extended {
+    .usa-nav {
+      background-color: #F5FBFF;
+      border-top: none;
+    }
+  }
+  .usa-hero {
+    background-image: none;
+    background-color: #112e51;
+    .usa-hero-callout {
+      max-width: 95ch;
+    }
+    .usa-section-dark h2 {
+      color: #fff;
+      font-size: 5rem;
+    }
+    .usa-button.usa-button-secondary {
+      background-color: #EDC730;
+      color: #000;
+      box-shadow: none;
+      border-radius: 0;
+    }
+  }
+  .usa-graphic_list {
+    background-color: #FAF7ED;
+  }
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6,
+  .usa-font-lead {
+    font-family: $font-sans;
+  }
+}

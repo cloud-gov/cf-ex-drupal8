@@ -1,0 +1,45 @@
+uuid: ab41878f-d8d6-40eb-a51c-918e649e0cf6
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.paragraph.uswds_media_block.field_uswds_body
+    - field.field.paragraph.uswds_media_block.field_uswds_image
+    - field.field.paragraph.uswds_media_block.field_uswds_title
+    - image.style.thumbnail
+    - paragraphs.paragraphs_type.uswds_media_block
+  module:
+    - image
+    - text
+_core:
+  default_config_hash: 62Nr4qaQpEE3sDVpG8U99F7WCpGzVyVRy_Bc-2Gts0g
+id: paragraph.uswds_media_block.default
+targetEntityType: paragraph
+bundle: uswds_media_block
+mode: default
+content:
+  field_uswds_body:
+    type: text_default
+    weight: 2
+    region: content
+    label: hidden
+    settings: {  }
+    third_party_settings: {  }
+  field_uswds_image:
+    type: image
+    weight: 0
+    region: content
+    label: hidden
+    settings:
+      image_style: thumbnail
+      image_link: ''
+    third_party_settings: {  }
+  field_uswds_title:
+    type: string
+    weight: 1
+    region: content
+    label: hidden
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+hidden: {  }

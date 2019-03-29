@@ -1,0 +1,28 @@
+uuid: 1e383946-3338-4ae6-ad57-2c4c5e58f5ec
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.paragraph.uswds_text.field_uswds_body
+    - paragraphs.paragraphs_type.uswds_text
+  module:
+    - text
+_core:
+  default_config_hash: L0bSBoq61I6ZDxI0ykCSzWHWNSpj2jNXv5kMvdPT7NM
+id: paragraph.uswds_text.default
+targetEntityType: paragraph
+bundle: uswds_text
+mode: default
+content:
+  field_uswds_body:
+    weight: 0
+    settings:
+      rows: 5
+      placeholder: ''
+    third_party_settings: {  }
+    type: text_textarea
+    region: content
+hidden:
+  created: true
+  status: true
+  uid: true

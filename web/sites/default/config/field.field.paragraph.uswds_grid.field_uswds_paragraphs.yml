@@ -1,0 +1,53 @@
+uuid: 74c7eafa-84b4-49a0-af19-e7613a8cb4db
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_uswds_paragraphs
+    - paragraphs.paragraphs_type.uswds_column
+    - paragraphs.paragraphs_type.uswds_grid
+  module:
+    - entity_reference_revisions
+_core:
+  default_config_hash: CSfQ9VKu0Bgz3n3Rdwq57kAFyohdDnuaZzMqNuDjOUk
+id: paragraph.uswds_grid.field_uswds_paragraphs
+field_name: field_uswds_paragraphs
+entity_type: paragraph
+bundle: uswds_grid
+label: Columns
+description: ''
+required: true
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:paragraph'
+  handler_settings:
+    target_bundles:
+      uswds_column: uswds_column
+    target_bundles_drag_drop:
+      uswds_grid:
+        weight: 9
+        enabled: false
+      uswds_accordion:
+        weight: 10
+        enabled: false
+      uswds_accordion_item:
+        weight: 11
+        enabled: false
+      uswds_column:
+        enabled: true
+        weight: 12
+      uswds_graphic_list:
+        weight: 13
+        enabled: false
+      uswds_hero:
+        weight: 14
+        enabled: false
+      uswds_media_block:
+        weight: 15
+        enabled: false
+      uswds_text:
+        weight: 16
+        enabled: false
+field_type: entity_reference_revisions

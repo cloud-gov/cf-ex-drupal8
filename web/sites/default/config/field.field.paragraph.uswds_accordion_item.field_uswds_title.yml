@@ -1,0 +1,21 @@
+uuid: 7e358577-577f-4a7a-b08f-5759f8c40d93
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_uswds_title
+    - paragraphs.paragraphs_type.uswds_accordion_item
+_core:
+  default_config_hash: XpiTzUQefb6GDykKHviUXqxth7DUs2vgRg2ntdK0UuQ
+id: paragraph.uswds_accordion_item.field_uswds_title
+field_name: field_uswds_title
+entity_type: paragraph
+bundle: uswds_accordion_item
+label: Title
+description: ''
+required: true
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

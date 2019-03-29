@@ -1,0 +1,23 @@
+uuid: dfbd1880-b869-44cd-9943-07b4d9d3dd90
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_uswds_body
+    - paragraphs.paragraphs_type.uswds_column
+  module:
+    - text
+_core:
+  default_config_hash: TMElrBundFbmVN62BEOHmrJNs69pI4kmauFT5y2zQtc
+id: paragraph.uswds_column.field_uswds_body
+field_name: field_uswds_body
+entity_type: paragraph
+bundle: uswds_column
+label: Text
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: text_long

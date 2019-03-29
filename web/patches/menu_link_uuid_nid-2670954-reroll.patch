@@ -1,0 +1,23 @@
+diff -Naur default_content/composer.json default_content_patched/composer.json
+--- default_content/composer.json	2018-04-27 15:49:03.000000000 -0700
++++ default_content_patched/composer.json	2018-04-27 15:50:22.000000000 -0700
+@@ -5,6 +5,7 @@
+   "license": "GPL-2.0+",
+   "minimum-stability": "dev",
+   "require": {
+-    "drupal/core": "~8.3"
++    "drupal/core": "~8.3",
++    "drupal/better_normalizers": "^1.0@beta"
+   }
+ }
+diff -Naur default_content/default_content.info.yml default_content_patched/default_content.info.yml
+--- default_content/default_content.info.yml	2018-04-27 15:49:18.000000000 -0700
++++ default_content_patched/default_content.info.yml	2018-04-27 15:50:22.000000000 -0700
+@@ -5,6 +5,7 @@
+ # core: 8.x
+ dependencies:
+   - drupal:hal (>=8.3.x)
++  - better_normalizers
+ 
+ # Information added by Drupal.org packaging script on 2017-10-19
+ version: '8.x-1.0-alpha7'

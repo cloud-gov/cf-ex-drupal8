@@ -1,0 +1,20 @@
+uuid: 155b40f9-16ea-40fe-867e-14eb87dd6d22
+langcode: en
+status: true
+dependencies:
+  module:
+    - paragraphs
+_core:
+  default_config_hash: Y3s4X7zJWTIo7viI2vOEPcDFy_0BAt_R7smvimvslk0
+id: paragraph.field_uswds_accordion_bordered
+field_name: field_uswds_accordion_bordered
+entity_type: paragraph
+type: boolean
+settings: {  }
+module: core
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

@@ -1,0 +1,8 @@
+#!/bin/bash
+set -e
+
+docker-compose run \
+  --rm \
+  --workdir /var/www \
+  web \
+  .docker/wait_for_db_then drupal --root=/var/www/web "$@"

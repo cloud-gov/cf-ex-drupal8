@@ -1,0 +1,33 @@
+uuid: 4eda06fe-82fd-4a4f-8cb1-7a5c217c981c
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.paragraph.uswds_accordion_item.field_uswds_body
+    - field.field.paragraph.uswds_accordion_item.field_uswds_title
+    - paragraphs.paragraphs_type.uswds_accordion_item
+  module:
+    - text
+_core:
+  default_config_hash: NPuSNiiMY-zqtpVYi-R1Ktk_i8vL4ExP5tHQDQ9g03I
+id: paragraph.uswds_accordion_item.default
+targetEntityType: paragraph
+bundle: uswds_accordion_item
+mode: default
+content:
+  field_uswds_body:
+    weight: 2
+    label: hidden
+    settings: {  }
+    third_party_settings: {  }
+    type: text_default
+    region: content
+  field_uswds_title:
+    weight: 1
+    label: hidden
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    type: string
+    region: content
+hidden: {  }

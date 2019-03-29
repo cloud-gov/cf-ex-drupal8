@@ -1,0 +1,26 @@
+uuid: cb905c15-b054-4b30-93e5-78fde7ba4c49
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.paragraph.uswds_graphic_list.field_uswds_paragraphs
+    - paragraphs.paragraphs_type.uswds_graphic_list
+  module:
+    - entity_reference_revisions
+_core:
+  default_config_hash: 2Ps52mf74nMkn3EYiA-gw4gGe7tyqtJI1fjNAJnqHA8
+id: paragraph.uswds_graphic_list.default
+targetEntityType: paragraph
+bundle: uswds_graphic_list
+mode: default
+content:
+  field_uswds_paragraphs:
+    type: entity_reference_revisions_entity_view
+    weight: 0
+    region: content
+    label: hidden
+    settings:
+      view_mode: default
+      link: ''
+    third_party_settings: {  }
+hidden: {  }

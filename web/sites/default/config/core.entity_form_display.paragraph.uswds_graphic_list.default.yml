@@ -1,0 +1,32 @@
+uuid: 50cecfe0-32e2-42a5-85e4-75433bf024a2
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.paragraph.uswds_graphic_list.field_uswds_paragraphs
+    - paragraphs.paragraphs_type.uswds_graphic_list
+  module:
+    - paragraphs
+_core:
+  default_config_hash: R5IkF8k1ja_tCUeq1TBRRACNJhVfriI9A7d77yiZ-xs
+id: paragraph.uswds_graphic_list.default
+targetEntityType: paragraph
+bundle: uswds_graphic_list
+mode: default
+content:
+  field_uswds_paragraphs:
+    type: entity_reference_paragraphs
+    weight: 0
+    region: content
+    settings:
+      title: 'Media block'
+      title_plural: 'Media blocks'
+      edit_mode: closed
+      add_mode: dropdown
+      form_display_mode: default
+      default_paragraph_type: uswds_media_block
+    third_party_settings: {  }
+hidden:
+  created: true
+  status: true
+  uid: true

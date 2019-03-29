@@ -1,0 +1,25 @@
+uuid: 9bb9c0f8-1d55-421c-a7a2-88d5f51ffba2
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_uswds_link
+    - paragraphs.paragraphs_type.uswds_hero
+  module:
+    - link
+_core:
+  default_config_hash: 6RI_pZvD3mzoOzvKOCwUKMaGiH8FdefOv7CGBNVL0M4
+id: paragraph.uswds_hero.field_uswds_link
+field_name: field_uswds_link
+entity_type: paragraph
+bundle: uswds_hero
+label: 'Hero callout link'
+description: 'If a link is provided, it will appear in this hero''s callout.'
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  link_type: 17
+  title: 2
+field_type: link

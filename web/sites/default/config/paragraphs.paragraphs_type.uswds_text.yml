@@ -1,0 +1,11 @@
+uuid: bd5f0f0e-d3e1-49a4-8bf6-779b06734d74
+langcode: en
+status: true
+dependencies: {  }
+_core:
+  default_config_hash: NJjHKLQf5V3ZipiCnK9_hVYD2xZQe_NNojlivDKz82Q
+id: uswds_text
+label: Text
+icon_uuid: null
+description: null
+behavior_plugins: {  }

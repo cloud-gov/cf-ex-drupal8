@@ -1,0 +1,32 @@
+uuid: 689a1ff0-f6ac-4e3a-b6c8-61433cf53689
+langcode: en
+status: true
+dependencies:
+  module:
+    - options
+    - paragraphs
+_core:
+  default_config_hash: Z8Zi-L2GK4LEFbs5mcIvXr_XnVUGNzgpv9NVANVq_qQ
+id: paragraph.field_uswds_grid_column_width
+field_name: field_uswds_grid_column_width
+entity_type: paragraph
+type: list_integer
+settings:
+  allowed_values:
+    -
+      value: 2
+      label: '½ width'
+    -
+      value: 3
+      label: '⅓ width'
+    -
+      value: 4
+      label: '¼ width'
+  allowed_values_function: ''
+module: options
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

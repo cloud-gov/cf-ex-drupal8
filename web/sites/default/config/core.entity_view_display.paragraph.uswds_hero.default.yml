@@ -1,0 +1,53 @@
+uuid: 70231c24-4455-46e8-bb43-3f74f23be8ba
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.paragraph.uswds_hero.field_uswds_button
+    - field.field.paragraph.uswds_hero.field_uswds_image
+    - field.field.paragraph.uswds_hero.field_uswds_link
+    - field.field.paragraph.uswds_hero.field_uswds_title
+    - paragraphs.paragraphs_type.uswds_hero
+  module:
+    - link
+_core:
+  default_config_hash: XkOlkt4ZXYAf8dfSGvGBzOeXP23J2Oa8mxdELSUz4Zk
+id: paragraph.uswds_hero.default
+targetEntityType: paragraph
+bundle: uswds_hero
+mode: default
+content:
+  field_uswds_button:
+    weight: 2
+    label: hidden
+    settings:
+      trim_length: null
+      url_only: false
+      url_plain: false
+      rel: '0'
+      target: '0'
+    third_party_settings: {  }
+    type: link
+    region: content
+  field_uswds_link:
+    weight: 1
+    label: hidden
+    settings:
+      trim_length: null
+      url_only: false
+      url_plain: false
+      rel: '0'
+      target: '0'
+    third_party_settings: {  }
+    type: link
+    region: content
+  field_uswds_title:
+    weight: 0
+    label: hidden
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    type: string
+    region: content
+hidden:
+  field_uswds_image: true
