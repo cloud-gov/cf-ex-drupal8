@@ -32,6 +32,7 @@ docker-compose up
 With cloud.gov, and view at the random-route selected:
 
 ```
+cf create-service aws-rds medium-mysql database # Takes 5-10m
 cf create-user-provided-service secrets -p '{
               "ADMIN_EMAIL": "secret@example.com",
               "CRON_KEY": "SECRET",
@@ -40,8 +41,26 @@ cf create-user-provided-service secrets -p '{
               "ROOT_USER_PASS": "root"
             }'
 cf create-service s3 basic-sandbox storage
-cf create-service aws-rds medium-mysql database # Takes 5-10m
 cf push
+```
+
+### Quick Reset
+
+Reset docker-compose:
+
+```sh
+docker-compose down -v
+```
+
+Reset cloud foundry / cloud.gov:
+
+```sh
+cf delete -f web
+cf delete -f cronish
+cf delete-service -f secrets
+cf delete-service -f database
+cf delete-service -f storage
+cf delete-orphaned-routes -f
 ```
 
 ## Developing locally
