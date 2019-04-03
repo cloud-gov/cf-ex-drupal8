@@ -1,0 +1,24 @@
+uuid: 93dd9d01-5dd9-4792-bd42-1672840ecd30
+langcode: en
+status: true
+dependencies:
+  config:
+    - system.menu.main
+  module:
+    - system
+  theme:
+    - your_uswds_subtheme
+id: mainnavigation
+theme: your_uswds_subtheme
+region: primary_menu
+weight: 0
+provider: null
+plugin: 'system_menu_block:main'
+settings:
+  id: 'system_menu_block:main'
+  label: 'Main navigation'
+  provider: system
+  label_display: '0'
+  level: 1
+  depth: 0
+visibility: {  }
