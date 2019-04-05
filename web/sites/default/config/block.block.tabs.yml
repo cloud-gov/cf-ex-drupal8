@@ -1,0 +1,29 @@
+uuid: d4655b45-61b9-42e9-acc4-da6ae2a4998e
+langcode: en
+status: true
+dependencies:
+  module:
+    - user
+  theme:
+    - your_uswds_subtheme
+id: tabs
+theme: your_uswds_subtheme
+region: content
+weight: -2
+provider: null
+plugin: local_tasks_block
+settings:
+  id: local_tasks_block
+  label: Tabs
+  provider: core
+  label_display: '0'
+  primary: true
+  secondary: true
+visibility:
+  user_role:
+    id: user_role
+    roles:
+      authenticated: authenticated
+    negate: false
+    context_mapping:
+      user: '@user.current_user_context:current_user'

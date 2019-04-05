@@ -28,16 +28,16 @@ storage/php
 db_dumps
 
 # Ignore configuration files that may contain sensitive information.
-sites/*/*settings*.php*
-sites/*/services*.yml
-sites/default/default.services.*
+web/sites/*/*settings*.php*
+web/sites/*/services*.yml
+web/sites/default/default.services.*
 
 # Ignore paths that contain user-generated content.
-sites/*/files
-sites/*/private
+web/sites/*/files
+web/sites/*/private
 
 # Ignore SimpleTest multi-site environment.
-sites/simpletest
+web/sites/simpletest
 
 # If you prefer to store your .gitignore file in the sites/ folder, comment
 # or delete the previous settings and uncomment the following ones, instead.
