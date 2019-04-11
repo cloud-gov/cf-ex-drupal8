@@ -6,8 +6,8 @@ default_config: &defaults
   services:
     - database # cf create-service aws-rds medium-mysql database
     - secrets  # cf create-user-provided-service secrets -p '{
-               # "CRON_KEY": ...
-               # "HASH_SALT": ...
+               # "CRON_KEY": ...,
+               # "HASH_SALT": ...,
                # "ROOT_USER_NAME": ...,
                # "ROOT_USER_PASS": ...,
                # }'
