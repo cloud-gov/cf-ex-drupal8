@@ -4,7 +4,7 @@ default_config: &defaults
   disk_quota: 512M
   timeout: 180
   services:
-    - database # cf create-service aws-rds medium-mysql database
+    - database # cf create-service aws-rds shared-mysql database
     - secrets  # cf create-user-provided-service secrets -p '{
                # "CRON_KEY": ...
                # "HASH_SALT": ...
