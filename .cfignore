@@ -13,7 +13,7 @@
 # Typically, composer generates a .gitignore to ignore the 
 # `settings.php` files.  For cloud.gov and Cloud Foundry, no sensitive 
 # information is stored in the settings files. Instead, those files
-# have code that parses environment variables for DB and S3
+# have code that parses environment variables for DB and S3.
 #
 # Ignore sensitive information [This is a `composer` default]
 # /web/sites/*/settings.php
