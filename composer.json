@@ -25,7 +25,6 @@
         "drupal/core": "8.5.14",
         "drupal/ctools": "^3.0",
         "drupal/default_content_deploy": "^1.0@alpha",
-        "drupal/devel": "^2.0",
         "drupal/diff": "^1.0@RC",
         "drupal/embed": "^1.0",
         "drupal/features": "^3.5",
@@ -87,5 +86,8 @@
                 "Make menu items export properly": "web/patches/menu_link_uuid_nid-2670954-reroll.patch"
             }
         }
+    },
+    "require-dev": {
+        "drupal/devel": "^2.0"
     }
 }
