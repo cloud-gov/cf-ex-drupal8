@@ -1,6 +1,6 @@
 <?php
-/** 
- * Collect external service information from environment. 
+/**
+ * Collect external service information from environment.
  * Cloud Foundry places all service credentials in VCAP_SERVICES
  */
 
