@@ -2,7 +2,7 @@
 
 In-progress Drupal 8 example for Cloud Foundry
 
-The overall aim here is to help Drupal site administrators understand how to run a production-worthy Drupal 8 site in Cloud Foundry. 
+The overall aim here is to help Drupal site administrators understand how to run a production-worthy Drupal 8 site in Cloud Foundry.
 
 This includes:
 * this is how you run this thing
@@ -38,11 +38,14 @@ cf create-user-provided-service secrets -p '{
               "CRON_KEY": "SECRET",
               "HASH_SALT": "SECRET",
               "ROOT_USER_NAME": "root",
-              "ROOT_USER_PASS": "root"
+              "ROOT_USER_PASS": "root",
+
             }'
 cf create-service s3 basic-sandbox storage
 cf push
 ```
+
+
 
 ### Quick Reset
 
@@ -541,11 +544,24 @@ cf env web
 ```
 
 and look in the results for the credentials of our "secrets" service (it'll be
-part of the `VCAP_SERVICES` section). Then, we update our `secrets` service
-like so:
+part of the `VCAP_SERVICES` section). Then, we update our `secrets` service.
+
+You will need to set the following variables with your secret values.
+
+  "ENVIRONMENT": "PROD",
+  "ADMIN_EMAIL": "your@email.com",
+  "CRON_KEY": "REPLACE_WITH_YOUR_SECRET",
+  "HASH_SALT": "REPLACE_WITH_YOUR_SECRET",
+  "ROOT_USER_NAME": "REPLACE_WITH_YOUR_SECRET",
+  "ROOT_USER_PASS": "REPLACE_WITH_YOUR_SECRET"
+
+
+Include all of the variables with your values. The `PROD` variable adds additional protections to the production environment.
+
+Here is the command with a shortened list:
 
 ```
-cf update-user-provided-service secrets -p '{"SAMPLE_ACCOUNT":"Some Value", "SAMPLE_CLIENT":"Another value", ...}'
+cf update-user-provided-service secrets -p '{"ENVIRONMENT": "PROD", "ADMIN_EMAIL": "your@email.com", ...}'
 ```
 
 ### Updating PHP

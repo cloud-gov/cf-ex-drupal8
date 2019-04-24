@@ -59,3 +59,6 @@ web/.htaccess
 
 # Ignore SimpleTest multi-site environment.
 # simpletest
+
+# ignore local settings if present
+*/settings.local.php
