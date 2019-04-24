@@ -7,6 +7,33 @@ services:
     environment:
       MYSQL_ROOT_PASSWORD: mysql
       MYSQL_DATABASE: mysql
+  storage:
+    restart: always
+    networks:
+      default:
+        aliases:
+          - cg-bucket.s3-us-west-1.amazonaws.com
+          - s3-us-west-1.amazonaws.com
+    image: minio/minio:latest
+    environment:
+      MINIO_DOMAIN: "s3-us-west-1.amazonaws.com"
+      MINIO_ACCESS_KEY: ACCESS_KEY_ID
+      MINIO_SECRET_KEY: secret123
+    command: minio server --address 0.0.0.0:80 /var/data/fakes3
+    volumes:
+      - storage_data:/var/data/fakes3:delegated
+  bucketmaker:
+    image: minio/mc
+    environment:
+      MINIO_ACCESS_KEY: ACCESS_KEY_ID
+      MINIO_SECRET_KEY: secret123
+    entrypoint: >
+      /bin/sh -c "
+      /usr/bin/mc config host add storage http://storage ACCESS_KEY_ID secret123;
+      /usr/bin/mc mb storage/cg-bucket;
+      /usr/bin/mc policy download storage/cg-bucket/public"
+    depends_on:
+      - storage
   web:
     build: .docker
     ports:
@@ -38,9 +65,24 @@ services:
               "ROOT_USER_NAME": "root",
               "ROOT_USER_PASS": "root"
             }
-          }]
+          }],
+          "s3": [{
+            "name": "storage",
+            "s3fake": "true",
+            "credentials": {
+              "access_key_id": "ACCESS_KEY_ID",
+              "bucket": "cg-bucket",
+              "region": "us-west-1",
+              "secret_access_key": "secret123",
+              "uri": "s3://ACCESS_KEY_ID:secret123@storage/cg-bucket"
+            },
+            "label": "s3",
+            "plan": "basic-public"
+           }]
         }
     depends_on:
       - database
+      - bucketmaker
 volumes:
   database_data:
+  storage_data:

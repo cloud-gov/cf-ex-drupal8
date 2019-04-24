@@ -1,6 +1,6 @@
 <?php
-/** 
- * Collect external service information from environment. 
+/**
+ * Collect external service information from environment.
  * Cloud Foundry places all service credentials in VCAP_SERVICES
  */
 
@@ -33,6 +33,12 @@ foreach ($cf_service_data as $service_provider => $service_list) {
       $config['s3fs.settings']['secret_key'] = $service['credentials']['secret_access_key'];
       $config['s3fs.settings']['use_https'] = TRUE;
       $settings['s3fs.use_s3_for_public'] = TRUE;
+      if ($service['s3fake'] === 'true') {
+        $config['s3fs.settings']['encryption'] = '';
+        $config['s3fs.settings']['use_customhost'] = TRUE;
+        $config['s3fs.settings']['hostname'] = 's3-us-west-1.amazonaws.com';
+        $config['s3fs.settings']['use_https'] = FALSE;
+      }
       // Twig templates _shouldn't_ be in the public dir (lest they be very slow)
       $settings['php_storage']['twig']['directory'] = '../storage/php';
     }
