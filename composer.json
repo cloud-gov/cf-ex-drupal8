@@ -21,6 +21,7 @@
         "cweagans/composer-patches": "^1.6",
         "drupal-composer/drupal-scaffold": "^2.2",
         "drupal/better_normalizers": "^1.0@beta",
+        "drupal/config_role_split": "^1.0@beta",
         "drupal/config_split": "^1.4",
         "drupal/console": "^1.0.2",
         "drupal/core": "8.5.14",

@@ -793,7 +793,9 @@ if (file_exists($app_root . '/' . $site_path . '/settings.local.php')) {
 // Use development config in dev environments.
 if (getenv("ENVIRONMENT") == "PROD") {
   $config['config_split.config_split.config_dev']['status'] = FALSE;
+  $config['config_role_split.role_split.production_role_config']['status'] = TRUE;
 }
 else {
   $config['config_split.config_split.config_dev']['status'] = TRUE;
+  $config['config_role_split.role_split.production_role_config']['status'] = FALSE;
 }
