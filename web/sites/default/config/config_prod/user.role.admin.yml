@@ -1,0 +1,46 @@
+uuid: 284cf4b5-afcc-4e78-a9d2-e0fc7e76e1bf
+langcode: en
+status: true
+dependencies: {  }
+id: admin
+label: ADMIN
+weight: -7
+is_admin: null
+permissions:
+  - 'access administration pages'
+  - 'access content overview'
+  - 'access devel information'
+  - 'access site in maintenance mode'
+  - 'access site reports'
+  - 'access user profiles'
+  - 'administer account settings'
+  - 'administer actions'
+  - 'administer config role split'
+  - 'administer configuration split'
+  - 'administer content types'
+  - 'administer devel_generate'
+  - 'administer menu'
+  - 'administer modules'
+  - 'administer nodes'
+  - 'administer permissions'
+  - 'administer site configuration'
+  - 'administer software updates'
+  - 'administer themes'
+  - 'administer users'
+  - 'administer views'
+  - 'administer workflows'
+  - 'bypass node access'
+  - 'cancel account'
+  - 'change own username'
+  - 'delete any page content'
+  - 'delete page revisions'
+  - 'edit any page content'
+  - 'export configuration'
+  - 'import configuration'
+  - 'link to any page'
+  - 'revert page revisions'
+  - 'select account cancellation method'
+  - 'switch users'
+  - 'synchronize configuration'
+  - 'view page revisions'
+  - 'view the administration theme'

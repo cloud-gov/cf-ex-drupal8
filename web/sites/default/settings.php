@@ -771,7 +771,7 @@ $settings['file_scan_ignore_directories'] = [
  */
 $settings['entity_update_batch_size'] = 50;
 
-$config_directories['sync'] = './sites/default/config/';
+$config_directories['sync'] = './sites/default/config/config_prod/';
 $settings['default_content_deploy_content_directory'] = './sites/default/content';
 $settings['install_profile'] = 'standard';
 include $app_root . '/' . $site_path . '/settings.cf.php';
@@ -790,12 +790,13 @@ if (file_exists($app_root . '/' . $site_path . '/settings.local.php')) {
   include $app_root . '/' . $site_path . '/settings.local.php';
 }
 
+// testing split DON'T COMMIT
 // Use development config in dev environments.
 if (getenv("ENVIRONMENT") == "PROD") {
-  $config['config_split.config_split.config_dev']['status'] = FALSE;
-  $config['config_role_split.role_split.production_role_config']['status'] = TRUE;
+  $config['config.config_split.config_dev']['status'] = FALSE;
+  $config['config_role_split.role_split.dev_role_config']['status'] = TRUE;
 }
 else {
-  $config['config_split.config_split.config_dev']['status'] = TRUE;
-  $config['config_role_split.role_split.production_role_config']['status'] = FALSE;
+  $config['config.config_split.config_dev']['status'] = TRUE;
+  $config['config_role_split.role_split.dev_role_config']['status'] = FALSE;
 }

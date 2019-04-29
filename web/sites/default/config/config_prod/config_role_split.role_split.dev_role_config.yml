@@ -2,12 +2,12 @@ uuid: 68fe82f5-5dae-4428-bbdf-d61d81f61d60
 langcode: en
 status: true
 dependencies: {  }
-id: production_role_config
-label: 'Production role config'
+id: dev_role_config
+label: 'Dev role config'
 weight: 0
-mode: exclude
+mode: split
 roles:
-  administrator:
+  admin:
     - 'access administration pages'
     - 'access contextual links'
     - 'access devel information'
