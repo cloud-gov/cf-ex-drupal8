@@ -21,8 +21,6 @@ module:
   dblog: 0
   default_content: 0
   default_content_deploy: 0
-  devel: 0
-  devel_generate: 0
   diff: 0
   dynamic_page_cache: 0
   editor: 0

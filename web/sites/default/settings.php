@@ -792,11 +792,10 @@ if (file_exists($app_root . '/' . $site_path . '/settings.local.php')) {
 
 // testing split DON'T COMMIT
 // Use development config in dev environments.
-if (getenv("ENVIRONMENT") == "PROD") {
+//if (getenv("ENVIRONMENT") == "PROD") {
+if (TRUE == FALSE) {
   $config['config.config_split.config_dev']['status'] = FALSE;
-  $config['config_role_split.role_split.dev_role_config']['status'] = TRUE;
 }
 else {
   $config['config.config_split.config_dev']['status'] = TRUE;
-  $config['config_role_split.role_split.dev_role_config']['status'] = FALSE;
 }

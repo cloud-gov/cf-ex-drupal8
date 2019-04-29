@@ -1,12 +1,14 @@
 uuid: 39ce9440-5e06-476c-b07f-b4c819f55549
 langcode: en
-status: false
+status: true
 dependencies: {  }
 id: config_dev
 label: config_dev
 description: ''
 folder: sites/default/config/config_dev
-module: {  }
+module:
+  devel: 0
+  devel_generate: 0
 theme: {  }
 blacklist: {  }
 graylist: {  }
