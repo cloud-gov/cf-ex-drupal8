@@ -1,4 +1,4 @@
-#!/bin/bash 
+#!/bin/bash
 set -euo pipefail
 
 fail() {
@@ -48,6 +48,8 @@ install_drupal() {
     # Set site uuid to match our config
     UUID=$(grep uuid $APP_ROOT/web/sites/default/config/system.site.yml | cut -d' ' -f2)
     drupal --root=$APP_ROOT/web config:override system.site uuid $UUID
+    # Import config-split settings
+    drush --root=$APP_ROOT/web config-split:import --no-interaction
 }
 
 if [ "${CF_INSTANCE_INDEX:-''}" == "0" ] && [ "${APP_NAME}" == "web" ]; then
@@ -68,6 +70,9 @@ if [ "${CF_INSTANCE_INDEX:-''}" == "0" ] && [ "${APP_NAME}" == "web" ]; then
 
   # Import initial content
   drush --root=$APP_ROOT/web default-content-deploy:import --no-interaction
+
+  # Import config-split settings
+  drush --root=$APP_ROOT/web config-split:import --no-interaction
 
   # Clear the cache
   drupal --root=$APP_ROOT/web cache:rebuild --no-interaction
