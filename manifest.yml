@@ -13,6 +13,7 @@ default_config: &defaults
                # "HASH_SALT": ...
                # "ROOT_USER_NAME": ...,
                # "ROOT_USER_PASS": ...,
+               # "ENVIRONMENT": "PROD",
                # }'
     - storage  # cf create-service s3 basic-sandbox storage
 

@@ -790,10 +790,8 @@ if (file_exists($app_root . '/' . $site_path . '/settings.local.php')) {
   include $app_root . '/' . $site_path . '/settings.local.php';
 }
 
-// testing split DON'T COMMIT
 // Use development config in dev environments.
-//if (getenv("ENVIRONMENT") == "PROD") {
-if (TRUE == FALSE) {
+if (getenv("ENVIRONMENT") == "PROD") {
   $config['config.config_split.config_dev']['status'] = FALSE;
 }
 else {

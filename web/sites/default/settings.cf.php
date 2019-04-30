@@ -33,7 +33,7 @@ foreach ($cf_service_data as $service_provider => $service_list) {
       $config['s3fs.settings']['secret_key'] = $service['credentials']['secret_access_key'];
       $config['s3fs.settings']['use_https'] = TRUE;
       $settings['s3fs.use_s3_for_public'] = TRUE;
-      if ($service['s3fake'] === 'true') {
+      if (isset($service['s3fake'])) {
         $config['s3fs.settings']['encryption'] = '';
         $config['s3fs.settings']['use_customhost'] = TRUE;
         $config['s3fs.settings']['hostname'] = 's3-us-west-1.amazonaws.com';
@@ -49,3 +49,6 @@ foreach ($cf_service_data as $service_provider => $service_list) {
 // This is from https://www.fomfus.com/articles/how-to-create-a-drupal-8-project-for-heroku-part-1
 // included here without fully understanding implications:
 $settings['cache']['bins']['data'] = 'cache.backend.php';
+
+// making sure dev packages are not in prod
+$config['config.config_split.config_dev']['status'] = FALSE;

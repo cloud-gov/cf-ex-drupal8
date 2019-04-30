@@ -788,7 +788,7 @@ $settings['entity_update_batch_size'] = 50;
 
 // adding this here because it is still acting buggy
 $config_directories['sync'] = './sites/default/config/config_prod/';
-if (TRUE == FALSE) {
+if (getenv("ENVIRONMENT") == "PROD") {
   $config['config.config_split.config_dev']['status'] = FALSE;
 }
 else {
