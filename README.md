@@ -39,7 +39,7 @@ cf create-user-provided-service secrets -p '{
               "HASH_SALT": "SECRET",
               "ROOT_USER_NAME": "root",
               "ROOT_USER_PASS": "root",
-
+              "ENVIRONMENT": "PROD",
             }'
 cf create-service s3 basic-sandbox storage
 cf push
@@ -126,6 +126,22 @@ faster.
 
 As the service runs, we can directly modify the PHP files in our app and see
 our changes in near-real time.
+
+### Development only dependencies
+
+We use [config-split](https://www.drupal.org/project/config_split) to enable some modules only in development. For example the devel module is handy locally because it can create fake data to test things, but it is not something you want in a production environment because it is easy to make a mistake and publish dummy data to production.
+
+
+To import the extra modules run the command in your development environment
+```
+drush config-split:import
+```
+Make sure you *don't* have `"ENVIRONMENT"` set to `"PROD"` in your local environment. The cloud.gov directions are configured to have this split going by default.
+
+You can add additional modules as development only using config-split. Once you make changes to the split locally, run":
+```
+drush config-split:export
+```
 
 ### Making styling changes
 
