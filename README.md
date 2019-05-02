@@ -250,7 +250,7 @@ next use composer. For example:
 bin/composer require drupal/some-new-module
 ```
 
-See the "Removing dependencies" section below for notes on that topic; it's a
+See the ["Removing dependencies"](#Removing-dependencies) section below for notes on that topic; it's a
 bit different than installation/updates.
 
 If we're making admin changes (including enabling any newly installed
