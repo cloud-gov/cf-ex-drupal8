@@ -1,46 +1,55 @@
-version: '3.0'
+---
 services:
   database:
-    image: mysql:5.7
-    volumes:
-      - database_data:/var/lib/mysql:delegated
     environment:
-      MYSQL_ROOT_PASSWORD: mysql
       MYSQL_DATABASE: mysql
+      MYSQL_ROOT_PASSWORD: mysql
+    image: "mysql:5.7"
+    volumes:
+      - "database_data:/var/lib/mysql:delegated"
   web:
     build: .docker
-    ports:
-      - 8080:80
-    volumes:
-      - .:/var/www/:delegated
-    command: "/var/www/.docker/startup"
-    environment:
-      CF_INSTANCE_INDEX: '0'
-      VCAP_APPLICATION: >
-        {"name": "web"}
-      VCAP_SERVICES: >
-        { "aws-rds": [{
-            "name": "database",
-            "credentials": {
-              "db_name": "mysql",
-              "host": "database",
-              "password": "mysql",
-              "port": "3306",
-              "username": "root"
-            }
-          }],
-          "user-provided": [{
-            "name": "secrets",
-            "credentials": {
-              "ADMIN_EMAIL": "secret@example.com",
-              "CRON_KEY": "SECRET",
-              "HASH_SALT": "SECRET",
-              "ROOT_USER_NAME": "root",
-              "ROOT_USER_PASS": "root"
-            }
-          }]
-        }
+    command: /var/www/.docker/startup
     depends_on:
       - database
+    environment:
+      CF_INSTANCE_INDEX: "0"
+      VCAP_APPLICATION: "{\"name\": \"web\"}"
+      VCAP_SERVICES: |
+          { "aws-rds": [{
+              "name": "database",
+              "credentials": {
+                "db_name": "mysql",
+                "host": "database",
+                "password": "mysql",
+                "port": "3306",
+                "username": "root"
+              }
+            }],
+            "user-provided": [{
+              "name": "secrets",
+              "credentials": {
+                "ADMIN_EMAIL": "secret@example.com",
+                "CRON_KEY": "SECRET",
+                "HASH_SALT": "SECRET",
+                "ROOT_USER_NAME": "root",
+                "ROOT_USER_PASS": "root"
+              },
+              "s3": [{
+                "name": "storage",
+                "credentials": {
+                 "access_key_id": "SECRET",
+                 "bucket": "SECRET",
+                 "region": "SECRET",
+                 "secret_access_key": "SECRET"
+                }
+              }]
+            }]
+          }
+    ports:
+      - "8080:80"
+    volumes:
+      - ".:/var/www/:delegated"
+version: "3.0"
 volumes:
   database_data:
