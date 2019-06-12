@@ -19,6 +19,7 @@
         "php": "^7.1.0",
         "composer/installers": "^1.2",
         "cweagans/composer-patches": "^1.6",
+        "drupal/devel": "^2.0",
         "drupal-composer/drupal-scaffold": "^2.2",
         "drupal/better_normalizers": "^1.0@beta",
         "drupal/console": "^1.0.2",
@@ -86,8 +87,5 @@
                 "Make menu items export properly": "web/patches/menu_link_uuid_nid-2670954-reroll.patch"
             }
         }
-    },
-    "require-dev": {
-        "drupal/devel": "^2.0"
     }
 }
