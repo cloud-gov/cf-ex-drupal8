@@ -5,8 +5,8 @@ SECRETS=$(echo $VCAP_SERVICES | jq -r '.["user-provided"][] | select(.name == "s
 APP_NAME=$(echo $VCAP_APPLICATION | jq -r '.name')
 APP_ROOT=$(dirname "${BASH_SOURCE[0]}")
 
-S3_BUCKET=$(echo $VCAP_SERVICES | jq -r '.["s3"][] | select(.name == "storage") | .credentials.bucket')
-S3_REGION=$(echo $VCAP_SERVICES | jq -r '.["s3"][] | select(.name == "storage") | .credentials.region')
+S3_BUCKET=$(echo $VCAP_SERVICES | jq -r '.["s3"][]? | select(.name == "storage") | .credentials.bucket')
+S3_REGION=$(echo $VCAP_SERVICES | jq -r '.["s3"][]? | select(.name == "storage") | .credentials.region')
 if [ -n "$S3_BUCKET" ] && [ -n "$S3_REGION" ]; then
   # Add Proxy rewrite rules to the top of the htaccess file
   sed -i "s/S3_BUCKET/$S3_BUCKET/g" $APP_ROOT/web/.htaccess
