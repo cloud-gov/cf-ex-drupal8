@@ -422,6 +422,23 @@ We'll also want to **c**hange our **d**irectory to be inside the repository.
 cd cf-ex-drupal8
 ```
 
+### Send our new code up to cloud.gov
+
+An easy way to do this is to run the `deploy-cloudgov.sh` script.
+It should create the services you need (if they are not already created),
+wait until the services are up, and then launch the app and tell you
+what URL you should go to.
+
+By default, it will use a cloud.gov shared mysql database.  If you wish
+to do a deploy to a dedicated RDS mysql database, then you should run
+`./deploy-cloudgov.sh prod`.
+
+As a part of this process, some secrets are generated, like the initial
+root password.  If you want, you can override this by saying:
+`export ROOT_USER_PASS=yourReallyGr3atPassw0rd.` and then running the
+`deploy-cloudgov.sh` script.
+
+
 
 ## Notes on cloud.gov
 
