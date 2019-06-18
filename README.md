@@ -360,39 +360,20 @@ clearing away all the database files.
 We prefer deploying code through a continuous integration system. This ensures
 reproducibility and allows us to add additional safeguards. Regardless of
 environment, however, our steps for deploying code are more or less the same:
-1. Install the `cf` executable and `autopilot` plugin (this can be done once)
+1. Install the `cf` executable (this can be done once)
 1. Clone a *fresh* copy of the repository (this must be done every time)
 1. Log into cloud.gov and target the appropriate environment
 1. Send our new code up to cloud.gov for deployment
 
-### Install cf/autopilot
+### Install cf
 
 Follow the Cloud Foundry
 [instructions](https://docs.cloudfoundry.org/cf-cli/install-go-cli.html) for
 installing the `cf` executable. This command-line interface is our primary
 mechanism for interacting with cloud.gov.
 
-Though it's not required, it's also a good idea to install the `autopilot`
-plugin, which lets us deploy without downtime. `cf` will allow us to spin down
-our old code and spin up new code in its place, which implies some downtime.
-The `autopilot` plugin [goes
-further](https://github.com/contraband/autopilot#method) by letting us spin up
-a _second_ set of instances prior to deleting the old. Installation involves
-downloading the latest version of the plugin, ensuring that binary is
-executable, and telling `cf` about it. Below we have commands for a Linux
-environment, but OSX and Windows would be similar:
-
-```sh
-# Get the binary
-wget "https://github.com/contraband/autopilot/releases/download/0.0.3/autopilot-linux"
-# Make it executable
-chmod a+x autopilot-linux
-# Tell cf it exists
-cf install-plugin autopilot-linux
-```
-
 If performing a deployment manually (outside of CI), note that you'll only
-need to install these executables once for use with all future deployments.
+need to install this executable once for use with all future deployments.
 
 ### Clone a fresh copy of the repo
 
