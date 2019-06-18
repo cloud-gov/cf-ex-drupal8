@@ -51,3 +51,6 @@ web/sites/simpletest
 
 # Ignore SimpleTest multi-site environment.
 # simpletest
+
+# ignore the generated .htaccess file
+web/.htaccess

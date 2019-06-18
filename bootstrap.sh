@@ -4,13 +4,23 @@ set -euo pipefail
 SECRETS=$(echo $VCAP_SERVICES | jq -r '.["user-provided"][] | select(.name == "secrets") | .credentials')
 APP_NAME=$(echo $VCAP_APPLICATION | jq -r '.name')
 APP_ROOT=$(dirname "${BASH_SOURCE[0]}")
+APP_ID=$(echo "$VCAP_APPLICATION" | jq -r '.application_id')
 
-S3_BUCKET=$(echo $VCAP_SERVICES | jq -r '.["s3"][] | select(.name == "storage") | .credentials.bucket')
-S3_REGION=$(echo $VCAP_SERVICES | jq -r '.["s3"][] | select(.name == "storage") | .credentials.region')
+DB_NAME=$(echo $VCAP_SERVICES | jq -r '.["aws-rds"][] | .credentials.db_name')
+DB_USER=$(echo $VCAP_SERVICES | jq -r '.["aws-rds"][] | .credentials.username')
+DB_PW=$(echo $VCAP_SERVICES | jq -r '.["aws-rds"][] | .credentials.password')
+DB_HOST=$(echo $VCAP_SERVICES | jq -r '.["aws-rds"][] | .credentials.host')
+DB_PORT=$(echo $VCAP_SERVICES | jq -r '.["aws-rds"][] | .credentials.port')
+
+S3_BUCKET=$(echo "$VCAP_SERVICES" | jq -r '.["s3"][]? | select(.name == "storage") | .credentials.bucket')
+export S3_BUCKET
+S3_REGION=$(echo "$VCAP_SERVICES" | jq -r '.["s3"][]? | select(.name == "storage") | .credentials.region')
+export S3_REGION
 if [ -n "$S3_BUCKET" ] && [ -n "$S3_REGION" ]; then
   # Add Proxy rewrite rules to the top of the htaccess file
-  sed -i "s/S3_BUCKET/$S3_BUCKET/g" $APP_ROOT/web/.htaccess
-  sed -i "s/S3_REGION/$S3_REGION/g" $APP_ROOT/web/.htaccess
+  sed "s/^#RewriteRule .s3fs/RewriteRule ^s3fs/" "$APP_ROOT/web/template-.htaccess" > "$APP_ROOT/web/.htaccess"
+else
+  cp "$APP_ROOT/web/template-.htaccess" "$APP_ROOT/web/.htaccess"
 fi
 
 install_drupal() {
@@ -36,6 +46,11 @@ install_drupal() {
 }
 
 if [ "${CF_INSTANCE_INDEX:-''}" == "0" ] && [ "${APP_NAME}" == "web" ]; then
+  if [ "$APP_ID" = "docker" ] ; then
+    # make sure database is created
+    echo "create database $DB_NAME;" | mysql --host="$DB_HOST" --port="$DB_PORT" --user="$DB_USER" --password="$DB_PW" || true
+  fi
+
   drupal --root=$APP_ROOT/web list | grep database > /dev/null || install_drupal
   # Mild data migration: fully delete database entries related to these
   # modules. These plugins (and the dependencies) can be removed once they've
