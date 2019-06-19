@@ -60,9 +60,6 @@ else
   cf create-service s3 basic-sandbox storage
 fi
 
-# create this to figure out where to set the s3 stuff
-cf create-service-key storage storagekey
-
 # wait until the db is fully provisioned
 until cf create-service-key database test-db-ok ; do
 	echo waiting until database is live...
@@ -72,16 +69,6 @@ cf delete-service-key database test-db-ok -f
 
 # launch the apps
 cf push
-
-# make sure that the app knows where it's s3fs stuff lives
-S3INFO=$(cf service-key storage storagekey)
-S3_BUCKET=$(echo "$S3INFO" | grep '"bucket":' | sed 's/.*"bucket": "\(.*\)",/\1/')
-S3_REGION=$(echo "$S3INFO" | grep '"region":' | sed 's/.*"region": "\(.*\)",/\1/')
-cf set-env web S3_BUCKET "$S3_BUCKET"
-cf set-env web S3_REGION "$S3_REGION"
-cf delete-service-key storage storagekey -f
-# This is a bit heavyweight, but it is the only way to get the environment variables to take effect.
-cf restage web
 
 # tell people where to go
 ROUTE=$(cf apps | grep web | awk '{print $6}')
