@@ -80,12 +80,12 @@ S3_REGION=$(echo "$S3INFO" | grep '"region":' | sed 's/.*"region": "\(.*\)",/\1/
 cf set-env web S3_BUCKET "$S3_BUCKET"
 cf set-env web S3_REGION "$S3_REGION"
 cf delete-service-key storage storagekey -f
-# This is a bit heavyweight, but it is the only way to get the environment variables to take effect.
-cf restage web
+cf restart web
 
 # tell people where to go
 ROUTE=$(cf apps | grep web | awk '{print $6}')
-
+ROOT_USER_NAME=$(cf e web | grep ROOT_USER_NAME | sed 's/.*: "\(.*\)".*/\1/')
+ROOT_USER_PASS=$(cf e web | grep ROOT_USER_PASS | sed 's/.*: "\(.*\)".*/\1/')
 echo
 echo
 echo "  to log into the drupal site, you will want to go to https://${ROUTE}/user/login and use"
