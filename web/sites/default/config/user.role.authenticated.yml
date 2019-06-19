@@ -9,17 +9,11 @@ label: 'Authenticated user'
 weight: -9
 is_admin: false
 permissions:
-  - 'access brightcove videos overview page'
-  - 'access brightcove_video_browser_widget entity browser pages'
   - 'access comments'
   - 'access content'
-  - 'access news feeds'
   - 'access shortcuts'
   - 'access site-wide contact form'
   - 'access tour'
   - 'post comments'
-  - 'skip comment approval'
   - 'use text format basic_html'
   - 'view own unpublished content'
-  - 'view published brightcove videos'
-  - 'view unpublished brightcove videos'

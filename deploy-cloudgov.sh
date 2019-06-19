@@ -60,9 +60,6 @@ else
   cf create-service s3 basic-sandbox storage
 fi
 
-# create this to figure out where to set the s3 stuff
-cf create-service-key storage storagekey
-
 # wait until the db is fully provisioned
 until cf create-service-key database test-db-ok ; do
 	echo waiting until database is live...
