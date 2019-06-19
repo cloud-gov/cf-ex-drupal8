@@ -11,7 +11,5 @@ is_admin: false
 permissions:
   - 'access comments'
   - 'access content'
-  - 'access news feeds'
   - 'access site-wide contact form'
   - 'use text format restricted_html'
-  - 'view published brightcove videos'
