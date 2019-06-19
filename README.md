@@ -497,31 +497,3 @@ like so:
 ```
 cf update-user-provided-service secrets -p '{"SAMPLE_ACCOUNT":"Some Value", "SAMPLE_CLIENT":"Another value", ...}'
 ```
-
-### Updating PHP
-
-We use the Cloud Foundry's
-[Multi-buildpack](https://github.com/cloudfoundry/multi-buildpack) to allow us
-to install a mysql client (essential for Drush). This also requires we specify
-our PHP buildpack, which is unfortunate as it means we can't rely on the
-cloud.gov folks to deploy it for us. Luckily, updating the PHP buildpack is
-easy and we can check the latest version cloud.gov has tested.
-
-First, we'll find the version number by querying cloud.gov.
-```
-cf buildpacks
-```
-
-The output will include a PHP buildpack with version number, e.g.
-`php-buildpack-cflinuxfs2-v4.3.70.zip`. This refers to the upstream (Cloud Foundry)
-buildpack version, so we'll update our `multi-buildpack.yml` accordingly:
-
-```yml
-buildpacks:
-  # We need the "apt" build pack to install a mysql client for drush
-  - https://github.com/cloudfoundry/apt-buildpack#v0.1.1
-  - https://github.com/cloudfoundry/php-buildpack#v4.3.70
-```
-
-We can also review cloud.gov's [release notes](https://cloud.gov/updates/) to
-see which buildpacks have been updated, though it's not as timely.
