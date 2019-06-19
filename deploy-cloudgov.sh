@@ -71,6 +71,7 @@ cf delete-service-key database test-db-ok -f
 cf push
 
 # make sure that the app knows where it's s3fs stuff lives
+cf create-service-key storage storagekey
 S3INFO=$(cf service-key storage storagekey)
 S3_BUCKET=$(echo "$S3INFO" | grep '"bucket":' | sed 's/.*"bucket": "\(.*\)",/\1/')
 S3_REGION=$(echo "$S3INFO" | grep '"region":' | sed 's/.*"region": "\(.*\)",/\1/')
