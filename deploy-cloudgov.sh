@@ -84,11 +84,9 @@ cf restart web
 
 # tell people where to go
 ROUTE=$(cf apps | grep web | awk '{print $6}')
-ROOT_USER_NAME=$(cf e web | grep ROOT_USER_NAME | sed 's/.*: "\(.*\)".*/\1/')
-ROOT_USER_PASS=$(cf e web | grep ROOT_USER_PASS | sed 's/.*: "\(.*\)".*/\1/')
 echo
 echo
-echo "  to log into the drupal site, you will want to go to https://${ROUTE}/user/login and use"
-echo "USERNAME:  ${ROOT_USER_NAME}"
-echo "PASSWORD:  ${ROOT_USER_PASS}"
+echo "  to log into the drupal site, you will want to go to https://${ROUTE}/user/login and get the username/password from the output of these commands:"
+echo "USERNAME:  cf e web | grep ROOT_USER_NAME | sed 's/.*: \"\(.*\)\".*/\1/'"
+echo "PASSWORD:  cf e web | grep ROOT_USER_PASS | sed 's/.*: \"\(.*\)\".*/\1/'"
 echo "  to get in.  Have fun!"
