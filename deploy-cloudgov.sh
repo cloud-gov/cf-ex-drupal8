@@ -70,12 +70,21 @@ cf delete-service-key database test-db-ok -f
 # launch the apps
 cf push
 
+# make sure that the app knows where it's s3fs stuff lives
+cf create-service-key storage storagekey
+S3INFO=$(cf service-key storage storagekey)
+S3_BUCKET=$(echo "$S3INFO" | grep '"bucket":' | sed 's/.*"bucket": "\(.*\)",/\1/')
+S3_REGION=$(echo "$S3INFO" | grep '"region":' | sed 's/.*"region": "\(.*\)",/\1/')
+cf set-env web S3_BUCKET "$S3_BUCKET"
+cf set-env web S3_REGION "$S3_REGION"
+cf delete-service-key storage storagekey -f
+cf restart web
+
 # tell people where to go
 ROUTE=$(cf apps | grep web | awk '{print $6}')
-
 echo
 echo
-echo "  to log into the drupal site, you will want to go to https://${ROUTE}/user/login and use"
-echo "USERNAME:  ${ROOT_USER_NAME}"
-echo "PASSWORD:  ${ROOT_USER_PASS}"
+echo "  to log into the drupal site, you will want to go to https://${ROUTE}/user/login and get the username/password from the output of these commands:"
+echo "USERNAME:  cf e web | grep ROOT_USER_NAME | sed 's/.*: \"\(.*\)\".*/\1/'"
+echo "PASSWORD:  cf e web | grep ROOT_USER_PASS | sed 's/.*: \"\(.*\)\".*/\1/'"
 echo "  to get in.  Have fun!"
