@@ -38,7 +38,7 @@ cf create-user-provided-service secrets -p '{
               "CRON_KEY": "SECRET",
               "HASH_SALT": "SECRET",
               "ROOT_USER_NAME": "root",
-              "ROOT_USER_PASS": "root"
+              "ROOT_USER_PASS": "root",
             }'
 cf create-service s3 basic-sandbox storage
 cf push
