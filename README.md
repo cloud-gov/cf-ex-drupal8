@@ -44,7 +44,7 @@ cf create-service s3 basic-sandbox storage
 cf push
 ```
 
-### Quick Reset
+### Quick reset
 
 Reset docker-compose:
 
