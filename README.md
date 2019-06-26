@@ -18,7 +18,6 @@ We'll also provide some guidance on what someone would need to do to reproduce t
   * [Notes on cloud.gov](#notes-on-cloudgov)
     + [Debugging](#debugging)
     + [Updating secrets](#updating-secrets)
-    + [Customizations that make this possible](#customizations-that-make-this-possible)
   * [Developing and testing changes locally](#developing-and-testing-changes-locally)
     + [Bring up a local site instance to work with](#bring-up-a-local-site-instance-to-work-with)
     + [Making styling changes](#making-styling-changes)
@@ -196,10 +195,6 @@ like so:
 ```
 cf update-user-provided-service secrets -p '{"SAMPLE_ACCOUNT":"Some Value", "SAMPLE_CLIENT":"Another value", ...}'
 ```
-
-### Customizations that make this possible
-
-[We need to fill this in to talk about how we use S3 for files, [Default Content](https://www.drupal.org/docs/8/modules/default-content-for-d8/overview) for content-as-code, etc.]
 
 ## Developing and testing changes locally
 ### Bring up a local site instance to work with
