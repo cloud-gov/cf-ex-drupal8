@@ -29,7 +29,7 @@ Test with `docker-compose` and view at http://localhost:8080
 docker-compose up
 ```
 
-With cloud.gov, and view at the random-route selected:
+Test on cloud.gov and view at the random route selected:
 
 ```
 cf create-service aws-rds medium-mysql database # Takes 5-10m
