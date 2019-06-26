@@ -1,22 +1,203 @@
 # cf-ex-drupal8
 
-In-progress Drupal 8 example for Cloud Foundry
+Drupal 8 example for Cloud Foundry
 
-The overall aim here is to help Drupal site administrators understand how to run a production-worthy Drupal 8 site in Cloud Foundry. 
 
-This includes:
-* this is how you run this thing
-* here are some of the nice attributes
-* here’s how to install plugins cleanly and keep it up-to-date with new versions of Drupal 8
+This repository demonstrates how to run a production-worthy Drupal 8 site in Cloud Foundry. Folks just getting started with [cloud.gov](https://cloud.gov) should find this an eye-poppingly simple route from “I have a cloud.gov account” to “I have a production-worthy Drupal site running on a FedRAMP-authorized CSP that I understand how to update, just waiting for me to customize it”.
+
+The code examples target [cloud.gov](https://cloud.gov) but are easily adapted for any Cloud Foundry target that provides MySQL and object storage (_a la_ AWS's S3).
 
 We'll also provide some guidance on what someone would need to do to reproduce this on their own codebase if they _don’t_ use this codebase as a starting point.
 
-The code examples target [cloud.gov](https://cloud.gov) but should be amenable to any Cloud Foundry foundations that provide MySQL and object storage (_a la_ AWS's S3).
+# Table of contents:
+  * [Deploying Drupal to Cloud Foundry](#deploying-drupal-to-cloud-foundry)
+    + [Install `cf`](#install--cf-)
+    + [Clone a fresh copy of the repo](#clone-a-fresh-copy-of-the-repo)
+    + [Log in and target the appropriate environment](#log-in-and-target-the-appropriate-environment)
+    + [Send our new code to cloud.gov](#send-our-new-code-to-cloudgov)
+  * [Notes on cloud.gov](#notes-on-cloudgov)
+    + [Debugging](#debugging)
+    + [Updating secrets](#updating-secrets)
+  * [Developing and testing changes locally](#developing-and-testing-changes-locally)
+    + [Bring up a local site instance to work with](#bring-up-a-local-site-instance-to-work-with)
+    + [Making styling changes](#making-styling-changes)
+    + [Helpful scripts](#helpful-scripts)
+    + [Using the S3 storage from another environment locally](#using-the-s3-storage-from-another-environment-locally)
+    + [Making configuration changes the DevOps way](#making-configuration-changes-the-devops-way)
+    + [Making content changes the DevOps way](#making-content-changes-the-devops-way)
+    + [Removing dependencies](#removing-dependencies)
+    + [Upgrading dependencies (e.g. Drupal)](#upgrading-dependencies--eg-drupal-)
+    + [Common errors](#common-errors)
+      - [Edits to `web/sites/default/xxx` won't go away](#edits-to--web-sites-default-xxx--won-t-go-away)
+    + [Start from scratch](#start-from-scratch)
+  
+## Deploying Drupal to Cloud Foundry
 
-The goal here is for folks who are just getting started with cloud.gov to have an eye-poppingly simple route from “I have a cloud.gov account” to “I have a production-worthy Drupal site running on a FedRAMP-authorized CSP that I understand how to update, just waiting for me to customize it”.
+We prefer deploying code through a continuous integration system. This ensures
+reproducibility and allows us to add additional safeguards. Regardless of
+environment, however, our steps for deploying code are more or less the same:
+1. Install the `cf` executable (this can be done once)
+1. Clone a *fresh* copy of the repository (this must be done every time)
+1. Log into cloud.gov and target the appropriate environment
+1. Send our new code to cloud.gov for deployment
 
-## Developing locally
+### Install `cf`
 
+Follow the Cloud Foundry
+[instructions](https://docs.cloudfoundry.org/cf-cli/install-go-cli.html) for
+installing the `cf` executable. This command-line interface is our primary
+mechanism for interacting with cloud.gov.
+
+If performing a deployment manually (outside of CI), note that you'll only
+need to install this executable once for use with all future deployments.
+
+### Clone a fresh copy of the repo
+
+In a continuous integration environment, we'll always check out a fresh copy
+of the code base, but if deploying manually, it's import to make a new, clean
+checkout of our repository to ensure we're not sending up additional files.
+Notably, using `git status` to check for a clean environment is _not_ enough;
+our `.gitignore` does not match the `.cfignore` so git's status output isn't a
+guaranty that there are no additional files. If deploying manually, it makes
+sense to create a new directory and perform the checkout within that
+directory, to prevent conflicts with our local checkout.
+
+```
+git clone https://github.com/18F/cf-ex-drupal8.git
+```
+
+As we don't need the full repository history, we could instead use an
+optimized version of that checkout:
+
+```
+git clone https://github.com/18F/cf-ex-drupal8.git --depth=1
+```
+
+We'll also want to **c**hange our **d**irectory to be inside the repository.
+
+```
+cd cf-ex-drupal8
+```
+
+### Log in and target the appropriate environment
+Now we need to make sure we're logged into Cloud Foundry...
+
+```
+cf login -a api.fr.cloud.gov --sso
+```
+
+And check that we're pointing at the desired organization and space:
+
+```
+cf target
+```
+
+If you want to change the target organization and space, you can provide parameters to `target`:
+
+```
+cf target -o <ORGNAME> -s <SPACENAME>
+```
+
+### Send our new code to cloud.gov
+
+We've included a simple script that deploys Drupal the first time.
+
+```
+./deploy-cloudgov.sh
+```
+
+The script creates the services you need (if they are not already created),
+waits until the services are up, and then launches the app and tells you
+what URL you should go to.
+
+By default, it will use a cloud.gov shared mysql database.  If you wish
+to do a deploy to a dedicated RDS mysql database, then you should run
+`./deploy-cloudgov.sh prod`.
+
+As a part of this process, some secrets are generated, like the initial
+root password.  If you want, you can override this by saying:
+`export ROOT_USER_PASS=yourReallyGr3atPassw0rd.` before running the
+`deploy-cloudgov.sh` script.
+
+## Notes on cloud.gov
+
+Our preferred platform-as-a-service is [cloud.gov](https://cloud.gov/), due to
+its
+[FedRAMP-Authorization](https://cloud.gov/overview/security/fedramp-tracker/).
+cloud.gov uses the open source [Cloud Foundry](https://www.cloudfoundry.org/)
+platform, which is very similar to [Heroku](https://www.heroku.com/). See
+cloud.gov's excellent [user docs](https://cloud.gov/docs/) to get acquainted
+with the system.
+
+### Debugging
+
+We'll assume you're already logged into cloud.gov. From there,
+
+```
+cf apps
+```
+will give a broad overview of the current application instances. We expect two
+"web" instances and one "cronish" worker in our environments, as described in
+[our manifest file](manifest.yml).
+
+```
+cf app web
+```
+will give us more detail about the "web" instances, specifically CPU, disk,
+and memory usage.
+
+```
+cf logs web
+```
+will let us attach to the emitted apache logs of our running "web" instances.
+If we add the `--recent` flag, we'll instead get output from our *recent* log
+history (and not see new logs as they come in). We can use these logs to debug
+500 errors. Be sure to look at cloud.gov's [logging
+docs](https://cloud.gov/docs/apps/logs/) (particularly, how to use Kibana) for
+more control.
+
+If necessary, we can also `ssh` into running instances. This should generally
+be avoided, however, as all modifications will be lost on next deploy. See the
+cloud.gov [docs on the topic](https://cloud.gov/docs/apps/using-ssh/) for more
+detail -- be sure to read the step about setting up the ssh environment.
+
+```
+cf ssh web
+```
+
+While the database isn't generally accessible outside the app's network, we
+can access it by setting up an SSH tunnel, as described in the
+[cf-service-connect](https://github.com/18F/cf-service-connect#readme) plugin.
+Note that the `web` and `cronish` instances don't have a `mysql` client (aside
+from PHP's PDO); sshing into them likely won't help.
+
+Of course, there are many more useful commands. Explore the cloud.gov [user
+docs](https://cloud.gov/docs/) to learn about more.
+
+### Updating secrets
+
+As our secrets are stored in a cloud.gov "user-provided service", to add new
+ones (or rotate existing secrets), we'll need to call the
+`update-user-provided-service` command. It can't be updated incrementally,
+however, so we'll need to set all of the secrets (including those that remain
+the same) at once.
+
+To grab the previous versions of these values, we can run
+
+```
+cf env web
+```
+
+and look in the results for the credentials of our "secrets" service (it'll be
+part of the `VCAP_SERVICES` section). Then, we update our `secrets` service
+like so:
+
+```
+cf update-user-provided-service secrets -p '{"SAMPLE_ACCOUNT":"Some Value", "SAMPLE_CLIENT":"Another value", ...}'
+```
+
+## Developing and testing changes locally
+### Bring up a local site instance to work with
 We'll use [Git](https://git-scm.com/) to pull down and manage our codebase.
 There are [many](https://guides.github.com/introduction/git-handbook/)
 [excellent](https://git-scm.com/book/en/v2/Getting-Started-Git-Basics)
@@ -104,14 +285,14 @@ As long as that command is running, it'll watch every `.scss` file in the `sass/
 
 Now, in a separate Terminal window and/or your favorite text editor, you can make changes to `web/themes/custom/your_uswds_subtheme/sass/uswds.scss` (or `_variables.scss`) and have your changes saved.
 
-### Other commands
+### Helpful scripts
 
 Within the `bin` directory, there are a handful of helpful scripts to make
 running `drupal`, `drush`, etc. within the context of our Dockerized app
 easier. As noted above, they are written with bash in mind, but should be easy
 to port to other environments.
 
-### File storage
+### Using the S3 storage from another environment locally
 
 Currently, even when running locally we need to simulate the S3
 environment by adding its credentials to the `VCAP_SERVICES`
@@ -141,7 +322,7 @@ As with other edits to the local secrets, extra care should be taken when
 exporting your config, lest those configuration files contain the true secret
 values rather than dummy "SECRET" strings.
 
-### Configuration workflow
+### Making configuration changes the DevOps way
 
 Making configuration changes to the application comes in roughly eight small steps:
 1. get the latest code
@@ -227,11 +408,11 @@ git push origin 333-add-the-whatsit
 
 And request a review in GitHub's interface.
 
-### Content workflow
+### Making content changes the DevOps way
 
 We'll also treat some pieces of content similar to configuration -- we want to
 deploy it with the code base rather than add/modify it in individual
-environments. The steps for this are very similar to the Config workflow:
+environments. The steps for this are very similar to the workflow for configuration:
 
 1. get the latest code
 1. create a feature branch
@@ -355,145 +536,3 @@ Generally, `down` spins down the running environment but doesn't delete any
 data. The `-v` flag, however, tells Docker to delete our data "volumes",
 clearing away all the database files.
 
-## Deploying code
-
-We prefer deploying code through a continuous integration system. This ensures
-reproducibility and allows us to add additional safeguards. Regardless of
-environment, however, our steps for deploying code are more or less the same:
-1. Install the `cf` executable (this can be done once)
-1. Clone a *fresh* copy of the repository (this must be done every time)
-1. Log into cloud.gov and target the appropriate environment
-1. Send our new code up to cloud.gov for deployment
-
-### Install cf
-
-Follow the Cloud Foundry
-[instructions](https://docs.cloudfoundry.org/cf-cli/install-go-cli.html) for
-installing the `cf` executable. This command-line interface is our primary
-mechanism for interacting with cloud.gov.
-
-If performing a deployment manually (outside of CI), note that you'll only
-need to install this executable once for use with all future deployments.
-
-### Clone a fresh copy of the repo
-
-In a continuous integration environment, we'll always check out a fresh copy
-of the code base, but if deploying manually, it's import to make a new, clean
-checkout of our repository to ensure we're not sending up additional files.
-Notably, using `git status` to check for a clean environment is _not_ enough;
-our `.gitignore` does not match the `.cfignore` so git's status output isn't a
-guaranty that there are no additional files. If deploying manually, it makes
-sense to create a new directory and perform the checkout within that
-directory, to prevent conflicts with our local checkout.
-
-```
-git clone https://github.com/18F/cf-ex-drupal8.git
-```
-
-As we don't need the full repository history, we could instead use an
-optimized version of that checkout:
-
-```
-git clone https://github.com/18F/cf-ex-drupal8.git --depth=1
-```
-
-We'll also want to **c**hange our **d**irectory to be inside the repository.
-
-```
-cd cf-ex-drupal8
-```
-
-### Send our new code up to cloud.gov
-
-An easy way to do this is to run the `deploy-cloudgov.sh` script.
-It should create the services you need (if they are not already created),
-wait until the services are up, and then launch the app and tell you
-what URL you should go to.
-
-By default, it will use a cloud.gov shared mysql database.  If you wish
-to do a deploy to a dedicated RDS mysql database, then you should run
-`./deploy-cloudgov.sh prod`.
-
-As a part of this process, some secrets are generated, like the initial
-root password.  If you want, you can override this by saying:
-`export ROOT_USER_PASS=yourReallyGr3atPassw0rd.` and then running the
-`deploy-cloudgov.sh` script.
-
-
-
-## Notes on cloud.gov
-
-Our preferred platform-as-a-service is [cloud.gov](https://cloud.gov/), due to
-its
-[FedRAMP-Authorization](https://cloud.gov/overview/security/fedramp-tracker/).
-Cloud.gov runs the open source [Cloud Foundry](https://www.cloudfoundry.org/)
-platform, which is very similar to [Heroku](https://www.heroku.com/). See
-cloud.gov's excellent [user docs](https://cloud.gov/docs/) to get acquainted
-with the system.
-
-### Debugging
-
-We'll assume you're already logged into cloud.gov. From there,
-
-```
-cf apps
-```
-will give a broad overview of the current application instances. We expect two
-"web" instances and one "cronish" worker in our environments, as described in
-our manifest files.
-
-```
-cf app web
-```
-will give us more detail about the "web" instances, specifically CPU, disk,
-and memory usage.
-
-```
-cf logs web
-```
-will let us attach to the emitted apache logs of our running "web" instances.
-If we add the `--recent` flag, we'll instead get output from our *recent* log
-history (and not see new logs as they come in). We can use these logs to debug
-500 errors. Be sure to look at cloud.gov's [logging
-docs](https://cloud.gov/docs/apps/logs/) (particularly, how to use Kibana) for
-more control.
-
-If necessary, we can also `ssh` into running instances. This should generally
-be avoided, however, as all modifications will be lost on next deploy. See the
-cloud.gov [docs on the topic](https://cloud.gov/docs/apps/using-ssh/) for more
-detail -- be sure to read the step about setting up the ssh environment.
-
-```
-cf ssh web
-```
-
-While the database isn't generally accessible outside the app's network, we
-can access it by setting up an SSH tunnel, as described in the
-[cf-service-connect](https://github.com/18F/cf-service-connect#readme) plugin.
-Note that the `web` and `cronish` instances don't have a `mysql` client (aside
-from PHP's PDO); sshing into them likely won't help.
-
-Of course, there are many more useful commands. Explore the cloud.gov [user
-docs](https://cloud.gov/docs/) to learn about more.
-
-### Updating secrets
-
-As our secrets are stored in a cloud.gov "user-provided service", to add new
-ones (or rotate existing secrets), we'll need to call the
-`update-user-provided-service` command. It can't be updated incrementally,
-however, so we'll need to set all of the secrets (including those that remain
-the same) at once.
-
-To grab the previous versions of these values, we can run
-
-```
-cf env web
-```
-
-and look in the results for the credentials of our "secrets" service (it'll be
-part of the `VCAP_SERVICES` section). Then, we update our `secrets` service
-like so:
-
-```
-cf update-user-provided-service secrets -p '{"SAMPLE_ACCOUNT":"Some Value", "SAMPLE_CLIENT":"Another value", ...}'
-```
