@@ -22,7 +22,7 @@
         "drupal-composer/drupal-scaffold": "^2.2",
         "drupal/better_normalizers": "^1.0@beta",
         "drupal/console": "^1.0.2",
-        "drupal/core": "8.5.14",
+        "drupal/core": "8.5.15",
         "drupal/ctools": "^3.0",
         "drupal/default_content_deploy": "^1.0@alpha",
         "drupal/devel": "^1.2",
