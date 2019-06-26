@@ -32,7 +32,7 @@ docker-compose up
 Test on cloud.gov and view at the random route selected:
 
 ```
-cf create-service aws-rds medium-mysql database # Takes 5-10m
+cf create-service aws-rds shared-mysql database # Takes 5-10 minutes to appear
 cf create-user-provided-service secrets -p '{
               "ADMIN_EMAIL": "secret@example.com",
               "CRON_KEY": "SECRET",
