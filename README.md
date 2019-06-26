@@ -23,7 +23,7 @@ Locally:
 bin/composer install
 ```
 
-Test with docker-compose, and view at http://localhost:8080
+Test with `docker-compose` and view at http://localhost:8080
 
 ```sh
 docker-compose up
