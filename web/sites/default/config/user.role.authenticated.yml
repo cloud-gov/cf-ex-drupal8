@@ -1,0 +1,19 @@
+uuid: f1db358e-79c7-4521-b2be-b5d80b770f0a
+langcode: en
+status: true
+dependencies: {  }
+_core:
+  default_config_hash: dJ0L2DNSj5q6XVZAGsuVDpJTh5UeYkIPwKrUOOpr8YI
+id: authenticated
+label: 'Authenticated user'
+weight: -9
+is_admin: false
+permissions:
+  - 'access comments'
+  - 'access content'
+  - 'access shortcuts'
+  - 'access site-wide contact form'
+  - 'access tour'
+  - 'post comments'
+  - 'use text format basic_html'
+  - 'view own unpublished content'

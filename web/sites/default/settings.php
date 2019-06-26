@@ -774,7 +774,15 @@ $settings['entity_update_batch_size'] = 50;
 $config_directories['sync'] = './sites/default/config/';
 $settings['default_content_deploy_content_directory'] = './sites/default/content';
 $settings['install_profile'] = 'standard';
-include $app_root . '/' . $site_path . '/settings.cf.php';
+
+// Handle cloud.gov and docker-compose file location differences
+if (file_exists($app_root . '/' . $site_path . '/settings.cf.php')) {
+  include $app_root . '/' . $site_path . '/settings.cf.php';
+}
+if (file_exists('./sites/default/settings.cf.php')) {
+  include './sites/default/settings.cf.php';
+}
+
 
 /**
  * Load local development override configuration, if available.

@@ -28,16 +28,16 @@ storage/php
 db_dumps
 
 # Ignore configuration files that may contain sensitive information.
-sites/*/*settings*.php*
-sites/*/services*.yml
-sites/default/default.services.*
+web/sites/*/*settings*.php*
+web/sites/*/services*.yml
+web/sites/default/default.services.*
 
 # Ignore paths that contain user-generated content.
-sites/*/files
-sites/*/private
+web/sites/*/files
+web/sites/*/private
 
 # Ignore SimpleTest multi-site environment.
-sites/simpletest
+web/sites/simpletest
 
 # Ignore default settings that are updated upon Drupal core updates.
 web/sites/default/default.settings.php
@@ -57,3 +57,6 @@ web/sites/example.sites.php
 
 # Ignore SimpleTest multi-site environment.
 # simpletest
+
+# ignore the generated .htaccess file
+web/.htaccess

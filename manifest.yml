@@ -1,13 +1,13 @@
 ---
 default_config: &defaults
   buildpacks:
-  # We need the "apt" buildpack to install a MySQL client for Drush
-    - https://github.com/cloudfoundry/apt-buildpack#v0.1.6
-    - https://github.com/cloudfoundry/php-buildpack#v4.3.72
+    # We need the "apt" buildpack to install a MySQL client for Drush; see apt.yml
+    - https://github.com/cloudfoundry/apt-buildpack.git
+    - php_buildpack
   disk_quota: 512M
   timeout: 180
   services:
-    - database # cf create-service aws-rds medium-mysql database
+    - database # cf create-service aws-rds shared-mysql database
     - secrets  # cf create-user-provided-service secrets -p '{
                # "CRON_KEY": ...
                # "HASH_SALT": ...

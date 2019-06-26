@@ -1,0 +1,18 @@
+uuid: 3ba87098-2efc-44a2-9bcf-58c5a83f00dc
+langcode: en
+status: true
+dependencies:
+  theme:
+    - your_uswds_subtheme
+id: pagetitle
+theme: your_uswds_subtheme
+region: header
+weight: 0
+provider: null
+plugin: page_title_block
+settings:
+  id: page_title_block
+  label: 'Page title'
+  provider: core
+  label_display: '0'
+visibility: {  }

@@ -1,0 +1,23 @@
+uuid: 6ef2ca2a-a80b-4dfd-adc9-1fe05f36951d
+langcode: en
+status: true
+dependencies:
+  config:
+    - core.entity_view_mode.aggregator_item.summary
+  module:
+    - aggregator
+_core:
+  default_config_hash: ei8DNHu3HVLFFuKrr2Y4MsxuHR8ZMt0kHQly-qfkTAU
+id: aggregator_item.aggregator_item.summary
+targetEntityType: aggregator_item
+bundle: aggregator_item
+mode: summary
+content:
+  timestamp:
+    weight: 0
+    region: content
+hidden:
+  author: true
+  description: true
+  feed: true
+  link: true

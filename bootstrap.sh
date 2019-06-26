@@ -11,21 +11,26 @@ SECRETS=$(echo $VCAP_SERVICES | jq -r '.["user-provided"][] | select(.name == "s
 APP_NAME=$(echo $VCAP_APPLICATION | jq -r '.name') ||
   fail "Unable to parse APP_NAME from VCAP_SERVICES"
 APP_ROOT=$(dirname "${BASH_SOURCE[0]}")
+APP_ID=$(echo "$VCAP_APPLICATION" | jq -r '.application_id')
+
+DB_NAME=$(echo $VCAP_SERVICES | jq -r '.["aws-rds"][] | .credentials.db_name')
+DB_USER=$(echo $VCAP_SERVICES | jq -r '.["aws-rds"][] | .credentials.username')
+DB_PW=$(echo $VCAP_SERVICES | jq -r '.["aws-rds"][] | .credentials.password')
+DB_HOST=$(echo $VCAP_SERVICES | jq -r '.["aws-rds"][] | .credentials.host')
+DB_PORT=$(echo $VCAP_SERVICES | jq -r '.["aws-rds"][] | .credentials.port')
 
 S3_FAKE=$(echo $VCAP_SERVICES | jq -r '.["s3"][] | select(.name == "storage") | .s3fake')
 [ "$S3_FAKE" != "null" ] && echo "Using fake S3"
 
-S3_BUCKET=$(echo $VCAP_SERVICES | jq -r '.["s3"][] | select(.name == "storage") | .credentials.bucket') ||
-  fail "Unable to parse S3_BUCKET from VCAP_SERVICES"
-S3_REGION=$(echo $VCAP_SERVICES | jq -r '.["s3"][] | select(.name == "storage") | .credentials.region') ||
-  fail "Unable to parse S3_REGION from VCAP_SERVICES"
-
+S3_BUCKET=$(echo "$VCAP_SERVICES" | jq -r '.["s3"][]? | select(.name == "storage") | .credentials.bucket')
+export S3_BUCKET
+S3_REGION=$(echo "$VCAP_SERVICES" | jq -r '.["s3"][]? | select(.name == "storage") | .credentials.region')
+export S3_REGION
 if [ -n "$S3_BUCKET" ] && [ -n "$S3_REGION" ]; then
   # Add Proxy rewrite rules to the top of the htaccess file
-  sed -e "s/S3_BUCKET/$S3_BUCKET/g; s/S3_REGION/$S3_REGION/g" \
-     < $APP_ROOT/web/.htaccess.in > $APP_ROOT/web/.htaccess
+  sed "s/^#RewriteRule .s3fs/RewriteRule ^s3fs/" "$APP_ROOT/web/template-.htaccess" > "$APP_ROOT/web/.htaccess"
 else
-  fail "Unable to rewrite .htaccess without S3_BUCKET and S3_REGION"
+  cp "$APP_ROOT/web/template-.htaccess" "$APP_ROOT/web/.htaccess"
 fi
 
 install_drupal() {
@@ -51,6 +56,11 @@ install_drupal() {
 }
 
 if [ "${CF_INSTANCE_INDEX:-''}" == "0" ] && [ "${APP_NAME}" == "web" ]; then
+  if [ "$APP_ID" = "docker" ] ; then
+    # make sure database is created
+    echo "create database $DB_NAME;" | mysql --host="$DB_HOST" --port="$DB_PORT" --user="$DB_USER" --password="$DB_PW" || true
+  fi
+
   drupal --root=$APP_ROOT/web list | grep database > /dev/null || install_drupal
   # Mild data migration: fully delete database entries related to these
   # modules. These plugins (and the dependencies) can be removed once they've
