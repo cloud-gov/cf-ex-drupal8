@@ -25,7 +25,7 @@ if [ -n "$S3_BUCKET" ] && [ -n "$S3_REGION" ]; then
   sed -e "s/S3_BUCKET/$S3_BUCKET/g; s/S3_REGION/$S3_REGION/g" \
      < $APP_ROOT/web/.htaccess.in > $APP_ROOT/web/.htaccess
 else
-  fail "Unable to rewrite .htaccess without S3_BUCKET S3_REGION"
+  fail "Unable to rewrite .htaccess without S3_BUCKET and S3_REGION"
 fi
 
 install_drupal() {
