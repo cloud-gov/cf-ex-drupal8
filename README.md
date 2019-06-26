@@ -52,7 +52,7 @@ Reset docker-compose:
 docker-compose down -v
 ```
 
-Reset cloud foundry / cloud.gov:
+To reset your environment on Cloud Foundry / cloud.gov:
 
 ```sh
 cf delete -f web
