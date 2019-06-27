@@ -72,7 +72,6 @@ if [ "${CF_INSTANCE_INDEX:-''}" == "0" ] && [ "${APP_NAME}" == "web" ]; then
   # Secrets
   ADMIN_EMAIL=$(echo $SECRETS | jq -r '.ADMIN_EMAIL')
   CRON_KEY=$(echo $SECRETS | jq -r '.CRON_KEY')
-  drupal --root=$APP_ROOT/web config:override scheduler.settings lightweight_cron_access_key $CRON_KEY > /dev/null
   drupal --root=$APP_ROOT/web config:override system.site mail $ADMIN_EMAIL > /dev/null
   drupal --root=$APP_ROOT/web config:override update.settings notification.emails.0 $ADMIN_EMAIL > /dev/null
 
@@ -82,6 +81,4 @@ if [ "${CF_INSTANCE_INDEX:-''}" == "0" ] && [ "${APP_NAME}" == "web" ]; then
   # Clear the cache
   drupal --root=$APP_ROOT/web cache:rebuild --no-interaction
 
-#  # Copy local files to S3"
-#  drush --root=$APP_ROOT/web s3fs:copy-local --no-interaction
 fi
