@@ -3,7 +3,7 @@
 Drupal 8 example for Cloud Foundry
 
 
-This repository demonstrates how to run a production-worthy Drupal 8 site in Cloud Foundry. Folks just getting started with [cloud.gov](https://cloud.gov) should find this an eye-poppingly simple route from “I have a cloud.gov account” to “I have a production-worthy Drupal site running on a FedRAMP-authorized CSP that I understand how to update, just waiting for me to customize it”.
+This repository demonstrates how to run a production-worthy Drupal 8 site in Cloud Foundry. Folks just getting started with [cloud.gov](https://cloud.gov) can use this as a path from “I have a cloud.gov account” to “I have a production-worthy Drupal site running on a FedRAMP-authorized CSP that I understand how to update, just waiting for me to customize it”.
 
 The code examples target [cloud.gov](https://cloud.gov) but are easily adapted for any Cloud Foundry target that provides MySQL and object storage (_a la_ AWS's S3).
 
