@@ -15,6 +15,7 @@ services:
       - .:/var/www/:delegated
     command: "/var/www/.docker/startup"
     environment:
+      COMPOSER_MEMORY_LIMIT: -1
       CF_INSTANCE_INDEX: '0'
       VCAP_APPLICATION: >
         {"name": "web", "application_id": "docker"}
