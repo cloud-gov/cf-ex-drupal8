@@ -2,6 +2,9 @@
 
 Drupal 8 example for Cloud Foundry
 
+This example is archived because it is not being actively maintained. Reach out to the cloud.gov [inquiries@cloud.gov](inquiries@cloud.gov) team if you want more information about deploying drupal to cloud.gov.
+
+We are planning to have a Drupal 9 example in the coming months. 
 
 This repository demonstrates how to run a production-worthy Drupal 8 site in Cloud Foundry. Folks just getting started with [cloud.gov](https://cloud.gov) can use this as a path from “I have a cloud.gov account” to “I have a production-worthy Drupal site running on a FedRAMP-authorized CSP that I understand how to update, just waiting for me to customize it”.
 
