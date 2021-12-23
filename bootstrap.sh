@@ -1,8 +1,15 @@
 #!/bin/bash 
 set -euo pipefail
 
-SECRETS=$(echo $VCAP_SERVICES | jq -r '.["user-provided"][] | select(.name == "secrets") | .credentials')
-APP_NAME=$(echo $VCAP_APPLICATION | jq -r '.name')
+fail() {
+  echo FAIL: "$@"
+  exit 1
+}
+
+SECRETS=$(echo $VCAP_SERVICES | jq -r '.["user-provided"][] | select(.name == "secrets") | .credentials') ||
+  fail "Unable to parse SECRETS from VCAP_SERVICES"
+APP_NAME=$(echo $VCAP_APPLICATION | jq -r '.name') ||
+  fail "Unable to parse APP_NAME from VCAP_SERVICES"
 APP_ROOT=$(dirname "${BASH_SOURCE[0]}")
 APP_ID=$(echo "$VCAP_APPLICATION" | jq -r '.application_id')
 
@@ -11,6 +18,9 @@ DB_USER=$(echo $VCAP_SERVICES | jq -r '.["aws-rds"][] | .credentials.username')
 DB_PW=$(echo $VCAP_SERVICES | jq -r '.["aws-rds"][] | .credentials.password')
 DB_HOST=$(echo $VCAP_SERVICES | jq -r '.["aws-rds"][] | .credentials.host')
 DB_PORT=$(echo $VCAP_SERVICES | jq -r '.["aws-rds"][] | .credentials.port')
+
+S3_FAKE=$(echo $VCAP_SERVICES | jq -r '.["s3"][] | select(.name == "storage") | .s3fake')
+[ "$S3_FAKE" != "null" ] && echo "Using fake S3"
 
 S3_BUCKET=$(echo "$VCAP_SERVICES" | jq -r '.["s3"][]? | select(.name == "storage") | .credentials.bucket')
 export S3_BUCKET
@@ -70,4 +80,5 @@ if [ "${CF_INSTANCE_INDEX:-''}" == "0" ] && [ "${APP_NAME}" == "web" ]; then
 
   # Clear the cache
   drupal --root=$APP_ROOT/web cache:rebuild --no-interaction
+
 fi
