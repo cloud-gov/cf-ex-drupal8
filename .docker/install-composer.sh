@@ -13,7 +13,7 @@ then
     exit 1
 fi
 
-php composer-setup.php --quiet
+php composer-setup.php --quiet --version=2.3.5
 RESULT=$?
 rm composer-setup.php
 mv composer.phar /usr/local/bin/composer
