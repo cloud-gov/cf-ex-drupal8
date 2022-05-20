@@ -797,6 +797,6 @@ if (file_exists('./sites/default/settings.cf.php')) {
 if (file_exists($app_root . '/' . $site_path . '/settings.local.php')) {
   include $app_root . '/' . $site_path . '/settings.local.php';
 }
-if (file_exists('./sites/default/settings/settings.local.php')) {
-  include './sites/default/settings/settings.local.php';
+if (file_exists('./sites/default/settings.local.php')) {
+  include './sites/default/settings.local.php';
 }
