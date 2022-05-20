@@ -58,16 +58,16 @@ if [ "${CF_INSTANCE_INDEX:-''}" == "0" ] && [ "${APP_NAME}" == "web" ]; then
   # been uninstalled in all environments
 
   # Sync configs from code
-  # drupal --root="$DOC_ROOT" config:import --directory "$DOC_ROOT/sites/default/config"
+  drupal --root="$DOC_ROOT" config:import --directory "$DOC_ROOT/sites/default/config"
 
   # Secrets
-  # ADMIN_EMAIL=$(echo "$SECRETS" | jq -r '.ADMIN_EMAIL')
-  # drupal --root="$DOC_ROOT" config:override system.site --key mail --value "$ADMIN_EMAIL" > /dev/null
-  # drupal --root="$DOC_ROOT" config:override update.settings --key notification.emails.0 --value "$ADMIN_EMAIL" > /dev/null
+  ADMIN_EMAIL=$(echo "$SECRETS" | jq -r '.ADMIN_EMAIL')
+  drupal --root="$DOC_ROOT" config:override system.site --key mail --value "$ADMIN_EMAIL" > /dev/null
+  drupal --root="$DOC_ROOT" config:override update.settings --key notification.emails.0 --value "$ADMIN_EMAIL" > /dev/null
 
   # Import initial content
-  # drush --root="$DOC_ROOT" default-content-deploy:import --folder "$DOC_ROOT/sites/default/content" --no-interaction
+  drush --root="$DOC_ROOT" default-content-deploy:import --folder "$DOC_ROOT/sites/default/content" --no-interaction
 
   # Clear the cache
-  # drupal --root="$DOC_ROOT" cache:rebuild --no-interaction
+  drupal --root="$DOC_ROOT" cache:rebuild --no-interaction
 fi
