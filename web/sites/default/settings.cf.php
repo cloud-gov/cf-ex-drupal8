@@ -33,6 +33,7 @@ foreach ($cf_service_data as $service_provider => $service_list) {
       $config['s3fs.settings']['secret_key'] = $service['credentials']['secret_access_key'];
       $config['s3fs.settings']['use_https'] = TRUE;
 
+      // Updated config structure for s3fs 8.x-3.x
       $settings['s3fs.access_key'] = $service['credentials']['access_key_id'];
       $settings['s3fs.bucket'] = $service['credentials']['bucket'];
       $settings['s3fs.public_folder'] = 'public';
