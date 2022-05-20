@@ -5,13 +5,19 @@ SECRETS=$(echo "$VCAP_SERVICES" | jq -r '.["user-provided"][] | select(.name == 
 APP_NAME=$(echo "$VCAP_APPLICATION" | jq -r '.name')
 APP_ROOT=$(dirname "${BASH_SOURCE[0]}")
 DOC_ROOT="$APP_ROOT/web"
+export DOC_ROOT
 APP_ID=$(echo "$VCAP_APPLICATION" | jq -r '.application_id')
 
 DB_NAME=$(echo "$VCAP_SERVICES" | jq -r '.["aws-rds"][] | .credentials.db_name')
+export DB_NAME
 DB_USER=$(echo "$VCAP_SERVICES" | jq -r '.["aws-rds"][] | .credentials.username')
+export DB_USER
 DB_PW=$(echo "$VCAP_SERVICES" | jq -r '.["aws-rds"][] | .credentials.password')
+export DB_PW
 DB_HOST=$(echo "$VCAP_SERVICES" | jq -r '.["aws-rds"][] | .credentials.host')
+export DB_HOST
 DB_PORT=$(echo "$VCAP_SERVICES" | jq -r '.["aws-rds"][] | .credentials.port')
+export DB_PORT
 
 S3_BUCKET=$(echo "$VCAP_SERVICES" | jq -r '.["s3"][]? | select(.name == "storage") | .credentials.bucket')
 export S3_BUCKET
@@ -52,22 +58,22 @@ if [ "${CF_INSTANCE_INDEX:-''}" == "0" ] && [ "${APP_NAME}" == "web" ]; then
     echo "create database if not exists $DB_NAME;" | mysql --host="$DB_HOST" --port="$DB_PORT" --user="$DB_USER" --password="$DB_PW" || true
   fi
 
-  drupal --root="$DOC_ROOT" list | grep config > /dev/null || install_drupal
+  drupal --root="$DOC_ROOT" list | grep "config:import" > /dev/null || install_drupal
   # Mild data migration: fully delete database entries related to these
   # modules. These plugins (and the dependencies) can be removed once they've
   # been uninstalled in all environments
 
   # Sync configs from code
-  drupal --root="$DOC_ROOT" config:import --directory "$DOC_ROOT/sites/default/config"
+  # drupal --root="$DOC_ROOT" config:import --directory "$DOC_ROOT/sites/default/config"
 
   # Secrets
-  ADMIN_EMAIL=$(echo "$SECRETS" | jq -r '.ADMIN_EMAIL')
-  drupal --root="$DOC_ROOT" config:override system.site --key mail --value "$ADMIN_EMAIL" > /dev/null
-  drupal --root="$DOC_ROOT" config:override update.settings --key notification.emails.0 --value "$ADMIN_EMAIL" > /dev/null
+  # ADMIN_EMAIL=$(echo "$SECRETS" | jq -r '.ADMIN_EMAIL')
+  # drupal --root="$DOC_ROOT" config:override system.site --key mail --value "$ADMIN_EMAIL" > /dev/null
+  # drupal --root="$DOC_ROOT" config:override update.settings --key notification.emails.0 --value "$ADMIN_EMAIL" > /dev/null
 
   # Import initial content
-  drush --root="$DOC_ROOT" default-content-deploy:import --folder "$DOC_ROOT/sites/default/content" --no-interaction
+  # drush --root="$DOC_ROOT" default-content-deploy:import --folder "$DOC_ROOT/sites/default/content" --no-interaction
 
   # Clear the cache
-  drupal --root="$DOC_ROOT" cache:rebuild --no-interaction
+  # drupal --root="$DOC_ROOT" cache:rebuild --no-interaction
 fi
