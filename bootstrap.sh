@@ -43,7 +43,7 @@ install_drupal() {
     drupal --root="$DOC_ROOT "config:delete active field.field.node.article.body --no-interaction
     # Set site uuid to match our config
     UUID=$(grep uuid "$DOC_ROOT"/sites/default/config/system.site.yml | cut -d' ' -f2)
-    drupal --root="$DOC_ROOT" config:override system.site uuid "$UUID"
+    drupal --root="$DOC_ROOT" config:override system.site --key uuid --value "$UUID"
 }
 
 if [ "${CF_INSTANCE_INDEX:-''}" == "0" ] && [ "${APP_NAME}" == "web" ]; then
@@ -57,16 +57,14 @@ if [ "${CF_INSTANCE_INDEX:-''}" == "0" ] && [ "${APP_NAME}" == "web" ]; then
   # modules. These plugins (and the dependencies) can be removed once they've
   # been uninstalled in all environments
 
-  ls -lah "$DOC_ROOT"
-
   # Sync configs from code
-  drupal --root="$DOC_ROOT" config:import
+  drupal --root="$DOC_ROOT" config:import --directory "$DOC_ROOT/sites/default/config"
 
   # Secrets
   ADMIN_EMAIL=$(echo "$SECRETS" | jq -r '.ADMIN_EMAIL')
   # CRON_KEY=$(echo "$SECRETS" | jq -r '.CRON_KEY')
-  drupal --root="$DOC_ROOT" config:override system.site mail "$ADMIN_EMAIL" > /dev/null
-  drupal --root="$DOC_ROOT" config:override update.settings notification.emails.0 "$ADMIN_EMAIL" > /dev/null
+  drupal --root="$DOC_ROOT" config:override system.site --key mail --value "$ADMIN_EMAIL" > /dev/null
+  drupal --root="$DOC_ROOT" config:override update.settings --key notification.emails.0 --value "$ADMIN_EMAIL" > /dev/null
 
   # Import initial content
   drush --root="$DOC_ROOT" default-content-deploy:import --no-interaction
