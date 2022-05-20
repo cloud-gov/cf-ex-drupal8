@@ -42,9 +42,9 @@ if service_exists "database" ; then
   echo database already created
 else
   if [ "$1" = "prod" ] ; then
-    cf create-service aws-rds medium-mysql database
+    cf create-service aws-rds medium-mysql-redundant database
   else
-    cf create-service aws-rds shared-mysql database
+    cf create-service aws-rds small-mysql database
   fi
 fi
 

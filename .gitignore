@@ -54,3 +54,4 @@ web/sites/simpletest
 
 # ignore the generated .htaccess file
 web/.htaccess
+/autoload.php

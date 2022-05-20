@@ -4,7 +4,7 @@ Drupal 8 example for Cloud Foundry
 
 This example is archived because it is not being actively maintained. Reach out to the cloud.gov [inquiries@cloud.gov](inquiries@cloud.gov) team if you want more information about deploying drupal to cloud.gov.
 
-We are planning to have a Drupal 9 example in the coming months. 
+We are planning to have a Drupal 9 example in the coming months.
 
 This repository demonstrates how to run a production-worthy Drupal 8 site in Cloud Foundry. Folks just getting started with [cloud.gov](https://cloud.gov) can use this as a path from “I have a cloud.gov account” to “I have a production-worthy Drupal site running on a FedRAMP-authorized CSP that I understand how to update, just waiting for me to customize it”.
 
@@ -65,39 +65,39 @@ guaranty that there are no additional files. If deploying manually, it makes
 sense to create a new directory and perform the checkout within that
 directory, to prevent conflicts with our local checkout.
 
-```
+```shell
 git clone https://github.com/18F/cf-ex-drupal8.git
 ```
 
 As we don't need the full repository history, we could instead use an
 optimized version of that checkout:
 
-```
+```shell
 git clone https://github.com/18F/cf-ex-drupal8.git --depth=1
 ```
 
 We'll also want to **c**hange our **d**irectory to be inside the repository.
 
-```
+```shell
 cd cf-ex-drupal8
 ```
 
 ### Log in and target the appropriate environment
 Now we need to make sure we're logged into Cloud Foundry...
 
-```
+```shell
 cf login -a api.fr.cloud.gov --sso
 ```
 
 And check that we're pointing at the desired organization and space:
 
-```
+```shell
 cf target
 ```
 
 If you want to change the target organization and space, you can provide parameters to `target`:
 
-```
+```shell
 cf target -o <ORGNAME> -s <SPACENAME>
 ```
 
@@ -105,7 +105,7 @@ cf target -o <ORGNAME> -s <SPACENAME>
 
 We've included a simple script that deploys Drupal the first time.
 
-```
+```shell
 ./deploy-cloudgov.sh
 ```
 
@@ -113,9 +113,15 @@ The script creates the services you need (if they are not already created),
 waits until the services are up, and then launches the app and tells you
 what URL you should go to.
 
-By default, it will use a cloud.gov shared mysql database.  If you wish
-to do a deploy to a dedicated RDS mysql database, then you should run
-`./deploy-cloudgov.sh prod`.
+By default, it will use a small cloud.gov database, which is ideal for testing
+but not a production environment.
+
+If you wish to do a deploy for a production environment and get a larger database
+with redundancy, then you should run:
+
+```shell
+./deploy-cloudgov.sh prod
+```
 
 As a part of this process, some secrets are generated, like the initial
 root password.  If you want, you can override this by saying:
@@ -136,22 +142,25 @@ with the system.
 
 We'll assume you're already logged into cloud.gov. From there,
 
-```
+```shell
 cf apps
 ```
+
 will give a broad overview of the current application instances. We expect two
 "web" instances and one "cronish" worker in our environments, as described in
 [our manifest file](manifest.yml).
 
-```
+```shell
 cf app web
 ```
+
 will give us more detail about the "web" instances, specifically CPU, disk,
 and memory usage.
 
-```
+```shell
 cf logs web
 ```
+
 will let us attach to the emitted apache logs of our running "web" instances.
 If we add the `--recent` flag, we'll instead get output from our *recent* log
 history (and not see new logs as they come in). We can use these logs to debug
@@ -164,7 +173,7 @@ be avoided, however, as all modifications will be lost on next deploy. See the
 cloud.gov [docs on the topic](https://cloud.gov/docs/apps/using-ssh/) for more
 detail -- be sure to read the step about setting up the ssh environment.
 
-```
+```shell
 cf ssh web
 ```
 
@@ -187,7 +196,7 @@ the same) at once.
 
 To grab the previous versions of these values, we can run
 
-```
+```shell
 cf env web
 ```
 
@@ -195,11 +204,12 @@ and look in the results for the credentials of our "secrets" service (it'll be
 part of the `VCAP_SERVICES` section). Then, we update our `secrets` service
 like so:
 
-```
+```shell
 cf update-user-provided-service secrets -p '{"SAMPLE_ACCOUNT":"Some Value", "SAMPLE_CLIENT":"Another value", ...}'
 ```
 
 ## Developing and testing changes locally
+
 ### Bring up a local site instance to work with
 We'll use [Git](https://git-scm.com/) to pull down and manage our codebase.
 There are [many](https://guides.github.com/introduction/git-handbook/)
@@ -208,7 +218,7 @@ There are [many](https://guides.github.com/introduction/git-handbook/)
 so we'll defer to them here. We'll assume you have cloned our repository and
 are now within it:
 
-```
+```shell
 git clone https://github.com/18F/cf-ex-drupal8.git
 cd cf-ex-drupal8
 ```
@@ -227,7 +237,7 @@ wouldn't need to be modified substantially for Windows or other environments.
 
 Our first step is to run
 
-```
+```shell
 bin/composer install
 ```
 
@@ -241,7 +251,7 @@ in Composer's [docs](https://getcomposer.org/doc/03-cli.md#require).
 
 Next, we can start our application:
 
-```
+```shell
 docker-compose up
 ```
 
@@ -267,20 +277,20 @@ This codebase's theme is a subtheme of the [U.S. Web Design System](https://drup
 Our style changes are all within the context of the `your_uswds_subtheme` "theme", so we'll
 start by getting there:
 
-```
+```shell
 cd web/themes/custom/your_uswds_subtheme
 ```
 
 If this is the first time we're editing a theme, we next need to install all
 of the relevant node modules:
 
-```
+```shell
 bin/npm install
 ```
 
 Finally, we'll start our "watch" script:
 
-```
+```shell
 bin/npm run build:watch
 ```
 
@@ -302,7 +312,8 @@ environment by adding its credentials to the `VCAP_SERVICES`
 environment variable.
 
 To find the values we're using in cloud.gov, use
-```
+
+```shell
 cf env web
 ```
 
@@ -339,14 +350,14 @@ Making configuration changes to the application comes in roughly eight small ste
 
 To get the latest code, we can `fetch` it from GitHub.
 
-```
+```shell
 git fetch origin
 git checkout origin/master
 ```
 
 Alternatively:
 
-```
+```shell
 git checkout master
 git pull origin master
 ```
@@ -356,14 +367,14 @@ focused on adding a single feature. We'll need to name the branch something
 unique, likely related to the task we're working on (perhaps including an
 issue number, for example).
 
-```
+```shell
 git checkout -b 333-add-the-whatsit
 ```
 
 If we are installing a new module or otherwise updating our dependencies, we
 next use composer. For example:
 
-```
+```shell
 bin/composer require drupal/some-new-module
 ```
 
@@ -383,7 +394,7 @@ the root/root. Modify whatever settings desired, which will modify them in
 your local database. We'll next need to export those configurations to the
 file system:
 
-```
+```shell
 bin/drupal config:export
 ```
 
@@ -391,21 +402,21 @@ We're almost done! We next need to review all of the changes and commit those
 that are relevant. Your git tool will have a diff viewer, but if you're using
 the command line, try
 
-```
+```shell
 git add -p
 ```
 
 to interactively select changes to stage for the commit. Once the changes are
 staged, commit them, e.g. with
 
-```
+```shell
 git commit -v
 ```
 
 Be sure to add a descriptive commit message. Now we can send the changes to
 GitHub:
 
-```
+```shell
 git push origin 333-add-the-whatsit
 ```
 
@@ -428,7 +439,7 @@ environments. The steps for this are very similar to the workflow for configurat
 The first two steps are identical to the Config workflow, so we'll skip to the
 third. Start the application:
 
-```
+```shell
 docker-compose up
 ```
 
@@ -474,7 +485,7 @@ to see how this is implemented.
 Updating dependencies through Composer is simple, though somewhat slow. First,
 we should spin down our local install:
 
-```
+```shell
 docker-compose down
 ```
 
@@ -482,7 +493,7 @@ Then, we run the
 [`update`](https://getcomposer.org/doc/01-basic-usage.md#updating-dependencies-to-their-latest-versions)
 command:
 
-```
+```shell
 bin/composer update [name-of-package, e.g. drupal/core]
 ```
 
@@ -493,13 +504,13 @@ After crunching away a while, you should see (e.g. via `git status`) that the
 (i.e. a backward-incompatible release), use the
 [`require`](https://getcomposer.org/doc/03-cli.md#require) command, e.g.
 
-```
+```shell
 bin/composer require drupal/core:9.*
 ```
 
 After installing the update, we should spin up our local instance
 
-```
+```shell
 docker-compose up
 ```
 
@@ -522,7 +533,7 @@ we're working locally, those permissions restrictions aren't incredibly
 important. We can revert them by granting ourselves "write" access again. In
 unix environments, we can run
 
-```
+```shell
 chmod u+w web/sites/default
 ```
 
@@ -531,7 +542,7 @@ chmod u+w web/sites/default
 As Docker is managing our environment, it's relatively easy to blow away our
 database and start from scratch.
 
-```
+```shell
 docker-compose down -v
 ```
 
