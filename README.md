@@ -113,9 +113,15 @@ The script creates the services you need (if they are not already created),
 waits until the services are up, and then launches the app and tells you
 what URL you should go to.
 
-By default, it will use a cloud.gov shared mysql database.  If you wish
-to do a deploy to a dedicated RDS mysql database, then you should run
-`./deploy-cloudgov.sh prod`.
+By default, it will use a small cloud.gov database, which is ideal for testing
+but not a production environment.
+
+If you wish to do a deploy for a production environment and get a larger database
+with redundancy, then you should run:
+
+```shell
+./deploy-cloudgov.sh prod
+```
 
 As a part of this process, some secrets are generated, like the initial
 root password.  If you want, you can override this by saying:
