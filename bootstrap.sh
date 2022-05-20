@@ -67,7 +67,7 @@ if [ "${CF_INSTANCE_INDEX:-''}" == "0" ] && [ "${APP_NAME}" == "web" ]; then
   drupal --root="$DOC_ROOT" config:override update.settings --key notification.emails.0 --value "$ADMIN_EMAIL" > /dev/null
 
   # Import initial content
-  drush --root="$DOC_ROOT" default-content-deploy:import --no-interaction
+  drush --root="$DOC_ROOT" default-content-deploy:import --folder "$DOC_ROOT/sites/default/content" --no-interaction
 
   # Clear the cache
   drupal --root="$DOC_ROOT" cache:rebuild --no-interaction
