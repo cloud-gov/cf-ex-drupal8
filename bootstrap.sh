@@ -54,7 +54,9 @@ if [ "${CF_INSTANCE_INDEX:-''}" == "0" ] && [ "${APP_NAME}" == "web" ]; then
   # Go into the Drupal web root directory
   cd "$DOC_ROOT"
 
+  # If there is no "config:import" command, Drupal needs to be installed
   drupal list | grep "config:import" > /dev/null || install_drupal
+  
   # Mild data migration: fully delete database entries related to these
   # modules. These plugins (and the dependencies) can be removed once they've
   # been uninstalled in all environments
