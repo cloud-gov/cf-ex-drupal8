@@ -40,7 +40,7 @@ install_drupal() {
     # Delete some data created in the "standard" install profile
     # See https://www.drupal.org/project/drupal/issues/2583113
     drupal --root="$DOC_ROOT" entity:delete shortcut_set default --no-interaction
-    drupal --root="$DOC_ROOT "config:delete active field.field.node.article.body --no-interaction
+    drupal --root="$DOC_ROOT" config:delete active field.field.node.article.body --no-interaction
     # Set site uuid to match our config
     UUID=$(grep uuid "$DOC_ROOT"/sites/default/config/system.site.yml | cut -d' ' -f2)
     drupal --root="$DOC_ROOT" config:override system.site --key uuid --value "$UUID"
@@ -52,7 +52,7 @@ if [ "${CF_INSTANCE_INDEX:-''}" == "0" ] && [ "${APP_NAME}" == "web" ]; then
     echo "create database if not exists $DB_NAME;" | mysql --host="$DB_HOST" --port="$DB_PORT" --user="$DB_USER" --password="$DB_PW" || true
   fi
 
-  drupal --root="$DOC_ROOT" list | grep database > /dev/null || install_drupal
+  drupal --root="$DOC_ROOT" list | grep config > /dev/null || install_drupal
   # Mild data migration: fully delete database entries related to these
   # modules. These plugins (and the dependencies) can be removed once they've
   # been uninstalled in all environments
@@ -62,7 +62,6 @@ if [ "${CF_INSTANCE_INDEX:-''}" == "0" ] && [ "${APP_NAME}" == "web" ]; then
 
   # Secrets
   ADMIN_EMAIL=$(echo "$SECRETS" | jq -r '.ADMIN_EMAIL')
-  # CRON_KEY=$(echo "$SECRETS" | jq -r '.CRON_KEY')
   drupal --root="$DOC_ROOT" config:override system.site --key mail --value "$ADMIN_EMAIL" > /dev/null
   drupal --root="$DOC_ROOT" config:override update.settings --key notification.emails.0 --value "$ADMIN_EMAIL" > /dev/null
 
