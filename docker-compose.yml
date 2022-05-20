@@ -41,7 +41,6 @@ services:
             }
           }]
         }
-      DRUPAL_IS_LOCAL: "true"
     depends_on:
       - database
 volumes:
