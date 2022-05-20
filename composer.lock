@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "e02db533bac3e9bea153f36412d9d8b2",
+    "content-hash": "980b024df69be8d60ee8e50ea60004ee",
     "packages": [
         {
             "name": "alchemy/zippy",
@@ -4097,17 +4097,11 @@
         },
         {
             "name": "drupal/scheduler",
-            "version": "1.4.0",
+            "version": "dev-1.x",
             "source": {
                 "type": "git",
                 "url": "https://git.drupalcode.org/project/scheduler.git",
-                "reference": "8.x-1.4"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://ftp.drupal.org/files/projects/scheduler-8.x-1.4.zip",
-                "reference": "8.x-1.4",
-                "shasum": "5b2203e4688e5d3ac67d0780605809c92c6ece70"
+                "reference": "ddb7630"
             },
             "require": {
                 "drupal/core": "^8 || ^9"
@@ -4119,12 +4113,15 @@
             },
             "type": "drupal-module",
             "extra": {
+                "branch-alias": {
+                    "dev-1.x": "1.x-dev"
+                },
                 "drupal": {
-                    "version": "8.x-1.4",
-                    "datestamp": "1637145565",
+                    "version": "8.x-1.4+9-dev",
+                    "datestamp": "1646848387",
                     "security-coverage": {
-                        "status": "covered",
-                        "message": "Covered by Drupal's security advisory policy"
+                        "status": "not-covered",
+                        "message": "Dev releases are not covered by Drupal security advisories."
                     }
                 },
                 "drush": {
@@ -9193,6 +9190,7 @@
         "drupal/inline_entity_form": 10,
         "drupal/rules": 15,
         "drupal/s3fs": 15,
+        "drupal/scheduler": 20,
         "drupal/time_formatter": 20,
         "drupal/tour_ui": 15,
         "drupal/uswds": 10,

@@ -35,7 +35,7 @@
         "drupal/pathauto": "^1.1",
         "drupal/rules": "^3.0@alpha",
         "drupal/s3fs": "^3.0@alpha",
-        "drupal/scheduler": "^1.0",
+        "drupal/scheduler": "1.x-dev#ddb7630",
         "drupal/time_formatter": "1.x-dev",
         "drupal/tour_ui": "^1.0@alpha",
         "drupal/uswds": "^1.0@beta",
