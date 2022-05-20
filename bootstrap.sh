@@ -5,19 +5,13 @@ SECRETS=$(echo "$VCAP_SERVICES" | jq -r '.["user-provided"][] | select(.name == 
 APP_NAME=$(echo "$VCAP_APPLICATION" | jq -r '.name')
 APP_ROOT=$(dirname "${BASH_SOURCE[0]}")
 DOC_ROOT="$APP_ROOT/web"
-export DOC_ROOT
 APP_ID=$(echo "$VCAP_APPLICATION" | jq -r '.application_id')
 
 DB_NAME=$(echo "$VCAP_SERVICES" | jq -r '.["aws-rds"][] | .credentials.db_name')
-export DB_NAME
 DB_USER=$(echo "$VCAP_SERVICES" | jq -r '.["aws-rds"][] | .credentials.username')
-export DB_USER
 DB_PW=$(echo "$VCAP_SERVICES" | jq -r '.["aws-rds"][] | .credentials.password')
-export DB_PW
 DB_HOST=$(echo "$VCAP_SERVICES" | jq -r '.["aws-rds"][] | .credentials.host')
-export DB_HOST
 DB_PORT=$(echo "$VCAP_SERVICES" | jq -r '.["aws-rds"][] | .credentials.port')
-export DB_PORT
 
 S3_BUCKET=$(echo "$VCAP_SERVICES" | jq -r '.["s3"][]? | select(.name == "storage") | .credentials.bucket')
 export S3_BUCKET
